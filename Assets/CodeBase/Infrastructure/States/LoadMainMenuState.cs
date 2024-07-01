@@ -7,7 +7,7 @@ namespace CodeBase.Infrastructure.States
    public class LoadMainMenuState : IState
    {
       private const string MainMenuSceneName = "MainMenu";
-      
+
       private readonly ISceneLoader _sceneLoader;
       private readonly ICurtain _curtain;
       private readonly IUIFactory _uiFactory;
@@ -22,20 +22,17 @@ namespace CodeBase.Infrastructure.States
       public void Enter() =>
          _curtain.Show(() => _sceneLoader.LoadScene(MainMenuSceneName, OnLoaded));
 
+      public void Exit()
+      {
+      }
+
       private void OnLoaded()
       {
          InitMenu();
          _curtain.Hide();
       }
 
-      private void InitMenu()
-      {
+      private void InitMenu() =>
          _uiFactory.CreateMenu(MenusType.MainMenu);
-      }
-      
-      public void Exit()
-      {
-         
-      }
    }
 }

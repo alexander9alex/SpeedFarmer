@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 6475144407658010966}
   - component: {fileID: 4092857289704020130}
   m_Layer: 5
-  m_Name: BlackoutChanger
+  m_Name: CurtainChanger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -284,7 +284,7 @@ GameObject:
   - component: {fileID: 3150512456915893981}
   - component: {fileID: 5447409538844001573}
   m_Layer: 5
-  m_Name: Blackout
+  m_Name: Curtain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -18,11 +18,14 @@ namespace CodeBase.Services
       private void Construct(ICoroutineRunner coroutineRunner) =>
          _coroutineRunner = coroutineRunner;
 
-      public void Show(Action onShowed = null) => 
+      public void Show(Action onShowed = null) =>
          _coroutineRunner.StartCoroutine(ChangeBlackoutCoroutine(onShowed, 0, 1, _curtainChangeStep));
 
-      public void Hide(Action onHided = null) => 
+      public void Hide(Action onHided = null)
+      {
+         onHided += () => _curtain.gameObject.SetActive(false);
          _coroutineRunner.StartCoroutine(ChangeBlackoutCoroutine(onHided, 1, 0, -_curtainChangeStep));
+      }
 
       private IEnumerator ChangeBlackoutCoroutine(Action onEnded, int startValue, int endValue, float step)
       {
@@ -35,7 +38,6 @@ namespace CodeBase.Services
             yield return null;
          }
 
-         _curtain.gameObject.SetActive(false);
          onEnded?.Invoke();
       }
 
