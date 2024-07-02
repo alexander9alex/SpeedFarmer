@@ -1,4 +1,5 @@
-﻿using CodeBase.Services;
+﻿using CodeBase.Infrastructure.Factories;
+using CodeBase.Services;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -8,20 +9,21 @@ namespace CodeBase.Infrastructure.States
       
       private readonly ISceneLoader _sceneLoader;
       private readonly ICurtain _curtain;
+      private readonly IHeroFactory _heroFactory;
 
-      public LoadGameState(ISceneLoader sceneLoader, ICurtain curtain)
+      public LoadGameState(ISceneLoader sceneLoader, ICurtain curtain, IHeroFactory heroFactory)
       {
          _sceneLoader = sceneLoader;
          _curtain = curtain;
+         _heroFactory = heroFactory;
       }
 
-      public void Enter()
-      {
+      public void Enter() => 
          _curtain.Show(() => _sceneLoader.LoadScene(GameSceneName, OnLoaded));
-      }
 
       private void OnLoaded()
       {
+         _heroFactory.CreateHero();
          _curtain.Hide();
       }
 

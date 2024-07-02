@@ -19,6 +19,12 @@ namespace CodeBase.Infrastructure.Installers
 
          BindEcs();
          BindFactories();
+         BindServices();
+      }
+
+      private void BindServices()
+      {
+         Container.BindInterfacesAndSelfTo<StaticDataService>().AsSingle();
          BindInputService();
          BindCoroutineRunner();
          BindCurtain();
@@ -34,6 +40,7 @@ namespace CodeBase.Infrastructure.Installers
       {
          Container.BindInterfacesAndSelfTo<GameStateFactory>().AsSingle();
          Container.BindInterfacesAndSelfTo<UIFactory>().AsSingle();
+         Container.BindInterfacesAndSelfTo<HeroFactory>().AsSingle();
       }
 
       private void BindInputService() => 

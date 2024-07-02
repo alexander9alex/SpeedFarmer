@@ -4,6 +4,6 @@ namespace CodeBase.Infrastructure.Factories
 {
    public interface IUIFactory
    {
-      public void CreateMenu(MenusType menusType);
+      public void CreateMenu(MenuType menuType);
    }
 }

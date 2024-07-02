@@ -28,11 +28,8 @@ namespace CodeBase.Infrastructure.States
 
       private void OnLoaded()
       {
-         InitMenu();
+         _uiFactory.CreateMenu(MenuType.MainMenu);
          _curtain.Hide();
       }
-
-      private void InitMenu() =>
-         _uiFactory.CreateMenu(MenusType.MainMenu);
    }
 }

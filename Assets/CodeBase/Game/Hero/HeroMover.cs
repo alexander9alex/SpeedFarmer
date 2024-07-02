@@ -1,7 +1,5 @@
-﻿using System;
-using CodeBase.Services;
+﻿using CodeBase.Services;
 using UnityEngine;
-using Zenject;
 
 namespace CodeBase.Game.Hero
 {
@@ -12,8 +10,7 @@ namespace CodeBase.Game.Hero
       
       private IInputService _inputService;
 
-      [Inject]
-      private void Construct(IInputService inputService)
+      public void Construct(IInputService inputService)
       {
          _inputService = inputService;
          inputService.Move += Move;

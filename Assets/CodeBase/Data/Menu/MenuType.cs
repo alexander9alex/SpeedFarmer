@@ -1,6 +1,6 @@
 ﻿namespace CodeBase.Data.Menu
 {
-   public enum MenusType
+   public enum MenuType
    {
       MainMenu
    }

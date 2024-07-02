@@ -2,36 +2,27 @@
 using CodeBase.Data.Menu;
 using CodeBase.Game.UI;
 using CodeBase.Infrastructure.States;
-using CodeBase.StaticData;
 using UnityEngine;
-using Zenject;
 using Object = UnityEngine.Object;
 
 namespace CodeBase.Infrastructure.Factories
 {
-   class UIFactory : IUIFactory, IInitializable
+   class UIFactory : IUIFactory
    {
-      private const string MenuDataPath = "StaticData/MenuData";
-      
       private readonly IGameStateMachine _gameStateMachine;
-      
-      private MenuData _menus;
+      private readonly IStaticData _staticData;
 
-      public UIFactory(IGameStateMachine gameStateMachine)
+      public UIFactory(IGameStateMachine gameStateMachine, IStaticData staticData)
       {
          _gameStateMachine = gameStateMachine;
+         _staticData = staticData;
       }
 
-      public void Initialize()
-      {
-         _menus = Resources.Load<MenuData>(MenuDataPath);
-      }
-
-      public void CreateMenu(MenusType menuType)
+      public void CreateMenu(MenuType menuType)
       {
          switch (menuType)
          {
-            case MenusType.MainMenu:
+            case MenuType.MainMenu:
                CreateMainMenu();
                break;
             default:
@@ -41,7 +32,9 @@ namespace CodeBase.Infrastructure.Factories
 
       private void CreateMainMenu()
       {
-         GameObject mainMenu = Object.Instantiate(_menus.MainMenuPrefab);
+         GameObject mainMenuPrefab = _staticData.GetMenuData().MainMenuPrefab;
+         GameObject mainMenu = Object.Instantiate(mainMenuPrefab);
+         
          MainMenuView mainMenuView = mainMenu.GetComponent<MainMenuView>();
          mainMenuView.PlayButton.onClick.AddListener(LoadGame);
          // mainMenuView.SettingsButton.onClick.AddListener(CreateMenu.Settings);
