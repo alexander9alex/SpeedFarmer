@@ -19,7 +19,6 @@ namespace CodeBase.Infrastructure.States
       public void Enter()
       {
          Application.targetFrameRate = 60;
-
          _sceneLoader.LoadScene(BootSceneName, OnLoaded);
       }
 

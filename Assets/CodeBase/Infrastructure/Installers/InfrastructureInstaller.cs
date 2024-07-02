@@ -11,16 +11,23 @@ namespace CodeBase.Infrastructure.Installers
       private const string CoroutineRunnerName = "CoroutineRunner";
 
       [SerializeField] private Curtain _curtain;
-
+      [SerializeField] private GameInputService _inputService;
+      
       public override void InstallBindings()
       {
          Container.BindInterfacesAndSelfTo<SceneLoader>().AsSingle();
-         
-         BindFactories();
-         BindEcs();
 
+         BindEcs();
+         BindFactories();
+         BindInputService();
          BindCoroutineRunner();
          BindCurtain();
+      }
+
+      private void BindEcs()
+      {
+         Container.BindInterfacesAndSelfTo<EcsWorld>().AsSingle();
+         Container.BindInterfacesAndSelfTo<EcsSystems>().AsSingle();
       }
 
       private void BindFactories()
@@ -29,11 +36,8 @@ namespace CodeBase.Infrastructure.Installers
          Container.BindInterfacesAndSelfTo<UIFactory>().AsSingle();
       }
 
-      private void BindEcs()
-      {
-         Container.BindInterfacesAndSelfTo<EcsWorld>().AsSingle();
-         Container.BindInterfacesAndSelfTo<EcsSystems>().AsSingle();
-      }
+      private void BindInputService() => 
+         Container.BindInterfacesAndSelfTo<IInputService>().FromInstance(_inputService).AsSingle();
 
       private void BindCoroutineRunner()
       {
