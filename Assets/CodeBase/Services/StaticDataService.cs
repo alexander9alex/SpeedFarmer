@@ -1,7 +1,7 @@
 ﻿using CodeBase.StaticData;
 using UnityEngine;
 
-namespace CodeBase.Infrastructure.Factories
+namespace CodeBase.Services
 {
    public class StaticDataService : IStaticData
    {

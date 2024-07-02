@@ -2,6 +2,7 @@
 using CodeBase.Data.Menu;
 using CodeBase.Game.UI;
 using CodeBase.Infrastructure.States;
+using CodeBase.Services;
 using UnityEngine;
 using Object = UnityEngine.Object;
 

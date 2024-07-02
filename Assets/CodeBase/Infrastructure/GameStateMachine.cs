@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using CodeBase.Infrastructure.Factories;
+using CodeBase.Infrastructure.States;
 using Zenject;
 
-namespace CodeBase.Infrastructure.States
+namespace CodeBase.Infrastructure
 {
    public class GameStateMachine : IGameStateMachine, IInitializable
    {
