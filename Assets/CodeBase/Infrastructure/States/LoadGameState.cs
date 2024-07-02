@@ -1,5 +1,6 @@
 ﻿using CodeBase.Infrastructure.Factories;
 using CodeBase.Services;
+using UnityEngine;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -10,12 +11,14 @@ namespace CodeBase.Infrastructure.States
       private readonly ISceneLoader _sceneLoader;
       private readonly ICurtain _curtain;
       private readonly IHeroFactory _heroFactory;
+      private readonly ICameraFactory _cameraFactory;
 
-      public LoadGameState(ISceneLoader sceneLoader, ICurtain curtain, IHeroFactory heroFactory)
+      public LoadGameState(ISceneLoader sceneLoader, ICurtain curtain, IHeroFactory heroFactory, ICameraFactory cameraFactory)
       {
          _sceneLoader = sceneLoader;
          _curtain = curtain;
          _heroFactory = heroFactory;
+         _cameraFactory = cameraFactory;
       }
 
       public void Enter() => 
@@ -23,8 +26,14 @@ namespace CodeBase.Infrastructure.States
 
       private void OnLoaded()
       {
-         _heroFactory.CreateHero();
+         InitWorld();
          _curtain.Hide();
+      }
+
+      private void InitWorld()
+      {
+         Transform hero = _heroFactory.CreateHero();
+         _cameraFactory.CreateCamera(hero);
       }
 
       public void Exit()

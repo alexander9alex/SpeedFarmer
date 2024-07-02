@@ -4,7 +4,8 @@ namespace CodeBase.Infrastructure.Factories
 {
    public interface IStaticData
    {
-      MenuData GetMenuData();
-      HeroData GetHeroData();
+      public MenuData GetMenuData();
+      public HeroData GetHeroData();
+      public CameraData GetCameraData();
    }
 }

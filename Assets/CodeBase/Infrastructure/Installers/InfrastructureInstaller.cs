@@ -41,6 +41,7 @@ namespace CodeBase.Infrastructure.Installers
          Container.BindInterfacesAndSelfTo<GameStateFactory>().AsSingle();
          Container.BindInterfacesAndSelfTo<UIFactory>().AsSingle();
          Container.BindInterfacesAndSelfTo<HeroFactory>().AsSingle();
+         Container.BindInterfacesAndSelfTo<CameraFactory>().AsSingle();
       }
 
       private void BindInputService() => 
