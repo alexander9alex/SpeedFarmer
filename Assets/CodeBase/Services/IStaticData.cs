@@ -7,5 +7,6 @@ namespace CodeBase.Services
       public MenuData GetMenuData();
       public HeroData GetHeroData();
       public CameraData GetCameraData();
+      public HudData GetHudData();
    }
 }

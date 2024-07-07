@@ -1,8 +1,10 @@
 ﻿using System;
 using CodeBase.Data.Menu;
+using CodeBase.Game.InventoryDir;
 using CodeBase.Game.UI;
-using CodeBase.Infrastructure.States;
 using CodeBase.Services;
+using CodeBase.StaticData;
+using Leopotam.Ecs;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -12,11 +14,17 @@ namespace CodeBase.Infrastructure.Factories
    {
       private readonly IGameStateMachine _gameStateMachine;
       private readonly IStaticData _staticData;
+      private readonly IInventory _inventory;
+      private readonly IInputService _inputService;
+      private readonly EcsWorld _world;
 
-      public UIFactory(IGameStateMachine gameStateMachine, IStaticData staticData)
+      public UIFactory(IGameStateMachine gameStateMachine, IStaticData staticData, IInventory inventory, IInputService inputService, EcsWorld world)
       {
          _gameStateMachine = gameStateMachine;
          _staticData = staticData;
+         _inventory = inventory;
+         _inputService = inputService;
+         _world = world;
       }
 
       public void CreateMenu(MenuType menuType)
@@ -31,21 +39,25 @@ namespace CodeBase.Infrastructure.Factories
          }
       }
 
+      public void CreateHud()
+      {
+         HudData hudData = _staticData.GetHudData();
+         GameObject hud = Object.Instantiate(hudData.HudPrefab);
+
+         CreateInventory(hud.transform, hudData.InventoryPrefab);
+      }
+
+      private void CreateInventory(Transform parent, GameObject inventoryPrefab)
+      {
+         GameObject inventory = Object.Instantiate(inventoryPrefab, parent);
+         inventory.GetComponent<InventoryView>().Construct(_inventory);
+      }
+
       private void CreateMainMenu()
       {
          GameObject mainMenuPrefab = _staticData.GetMenuData().MainMenuPrefab;
          GameObject mainMenu = Object.Instantiate(mainMenuPrefab);
-         
-         MainMenuView mainMenuView = mainMenu.GetComponent<MainMenuView>();
-         mainMenuView.PlayButton.onClick.AddListener(LoadGame);
-         // mainMenuView.SettingsButton.onClick.AddListener(CreateMenu.Settings);
-         mainMenuView.ExitButton.onClick.AddListener(QuitGame);
+         mainMenu.GetComponent<MainMenuView>().Construct(_gameStateMachine);
       }
-
-      private void LoadGame() => 
-         _gameStateMachine.Enter<LoadGameState>();
-
-      private void QuitGame() => 
-         Application.Quit();
    }
 }

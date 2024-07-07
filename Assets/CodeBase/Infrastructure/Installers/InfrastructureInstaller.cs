@@ -1,4 +1,6 @@
-﻿using CodeBase.Infrastructure.Factories;
+﻿using CodeBase.Ecs.Systems;
+using CodeBase.Game.InventoryDir;
+using CodeBase.Infrastructure.Factories;
 using CodeBase.Services;
 using Leopotam.Ecs;
 using UnityEngine;
@@ -11,12 +13,12 @@ namespace CodeBase.Infrastructure.Installers
       private const string CoroutineRunnerName = "CoroutineRunner";
 
       [SerializeField] private Curtain _curtain;
-      [SerializeField] private GameInputService _inputService;
       
       public override void InstallBindings()
       {
          Container.BindInterfacesAndSelfTo<SceneLoader>().AsSingle();
-
+         Container.BindInterfacesAndSelfTo<Inventory>().AsSingle();
+         
          BindEcs();
          BindFactories();
          BindServices();
@@ -25,15 +27,17 @@ namespace CodeBase.Infrastructure.Installers
       private void BindServices()
       {
          Container.BindInterfacesAndSelfTo<StaticDataService>().AsSingle();
-         BindInputService();
+         Container.BindInterfacesAndSelfTo<GameInputService>().AsSingle();
+         Container.BindInterfacesAndSelfTo<Interactor>().AsSingle().NonLazy();
+         Container.BindInterfacesAndSelfTo<Curtain>().FromInstance(_curtain).AsSingle();
          BindCoroutineRunner();
-         BindCurtain();
       }
 
       private void BindEcs()
       {
          Container.BindInterfacesAndSelfTo<EcsWorld>().AsSingle();
          Container.BindInterfacesAndSelfTo<EcsSystems>().AsSingle();
+         BindSystems();
       }
 
       private void BindFactories()
@@ -42,23 +46,20 @@ namespace CodeBase.Infrastructure.Installers
          Container.BindInterfacesAndSelfTo<UIFactory>().AsSingle();
          Container.BindInterfacesAndSelfTo<HeroFactory>().AsSingle();
          Container.BindInterfacesAndSelfTo<CameraFactory>().AsSingle();
+         Container.BindInterfacesAndSelfTo<EcsSystemsFactory>().AsSingle();
       }
-
-      private void BindInputService() => 
-         Container.BindInterfacesAndSelfTo<IInputService>().FromInstance(_inputService).AsSingle();
 
       private void BindCoroutineRunner()
       {
          CoroutineRunner coroutineRunner = new GameObject(CoroutineRunnerName).AddComponent<CoroutineRunner>();
-         coroutineRunner.transform.parent = transform;
-         DontDestroyOnLoad(coroutineRunner);
+         coroutineRunner.transform.parent = transform.parent;
          Container.BindInterfacesAndSelfTo<CoroutineRunner>().FromInstance(coroutineRunner).AsSingle();
       }
 
-      private void BindCurtain()
+      private void BindSystems()
       {
-         DontDestroyOnLoad(_curtain);
-         Container.BindInterfacesAndSelfTo<Curtain>().FromInstance(_curtain).AsSingle();
+         Container.BindInterfacesAndSelfTo<TryInteractSystem>().AsSingle();
+         Container.BindInterfacesAndSelfTo<DropItemSystem>().AsSingle();
       }
    }
 }

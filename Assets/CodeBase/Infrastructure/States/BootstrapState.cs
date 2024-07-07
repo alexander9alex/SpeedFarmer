@@ -23,7 +23,7 @@ namespace CodeBase.Infrastructure.States
       }
 
       private void OnLoaded() =>
-         _gameStateMachine.Enter<InitEcsState>();
+         _gameStateMachine.Enter<InitSystemsState>();
 
       public void Exit()
       {

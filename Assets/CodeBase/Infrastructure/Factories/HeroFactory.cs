@@ -1,5 +1,7 @@
-﻿using CodeBase.Game.Hero;
+﻿using CodeBase.Ecs.Components;
+using CodeBase.Game.Hero;
 using CodeBase.Services;
+using Leopotam.Ecs;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories
@@ -8,11 +10,13 @@ namespace CodeBase.Infrastructure.Factories
    {
       private readonly IStaticData _staticData;
       private readonly IInputService _inputService;
+      private readonly EcsWorld _world;
 
-      public HeroFactory(IStaticData staticData, IInputService inputService)
+      public HeroFactory(IStaticData staticData, IInputService inputService, EcsWorld world)
       {
          _staticData = staticData;
          _inputService = inputService;
+         _world = world;
       }
       
       public Transform CreateHero()
@@ -23,6 +27,10 @@ namespace CodeBase.Infrastructure.Factories
          hero.GetComponent<HeroMover>().Construct(_inputService);
          hero.GetComponent<HeroAnimator>().Construct(_inputService);
 
+         EcsEntity heroEntity = _world.NewEntity();
+         ref Hero heroComponent = ref heroEntity.Get<Hero>();
+         heroComponent.HeroGo = hero;
+         
          return hero.transform;
       }
    }

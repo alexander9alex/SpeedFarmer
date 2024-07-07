@@ -21,10 +21,11 @@ namespace CodeBase.Infrastructure
          _states = new()
          {
             { typeof(BootstrapState), _gameStateFactory.CreateState<BootstrapState>() },
-            { typeof(InitEcsState), _gameStateFactory.CreateState<InitEcsState>() },
+            { typeof(InitSystemsState), _gameStateFactory.CreateState<InitSystemsState>() },
             { typeof(LoadProgressState), _gameStateFactory.CreateState<LoadProgressState>() },
             { typeof(LoadMainMenuState), _gameStateFactory.CreateState<LoadMainMenuState>() },
             { typeof(LoadGameState), _gameStateFactory.CreateState<LoadGameState>() },
+            { typeof(GameLoopState), _gameStateFactory.CreateState<GameLoopState>() },
          };
 
          Enter<BootstrapState>();
