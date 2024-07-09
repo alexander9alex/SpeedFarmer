@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using CodeBase.Game.PlaceToGrow;
+using CodeBase.Game.PlaceToGrowDir;
 using CodeBase.Services;
 using CodeBase.StaticData;
 using UnityEngine;
@@ -27,11 +27,7 @@ namespace CodeBase.Infrastructure.Factories
       private void CreatePlaceToGrow(Transform parent, Vector2 pos)
       {
          GameObject placeToGrowGo = Object.Instantiate(_placeToGrowData.PlaceToGrowPrefab, pos, Quaternion.identity, parent);
-         
-         PlaceToGrow placeToGrow = new(_staticData);
-         placeToGrowGo.GetComponent<PlaceToGrowView>().Construct(placeToGrow);
-         
-         placeToGrow.Init();
+         placeToGrowGo.GetComponent<PlaceToGrow>().Construct(_staticData);
       }
    }
 }

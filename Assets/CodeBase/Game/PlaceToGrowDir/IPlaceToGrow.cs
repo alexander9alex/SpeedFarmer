@@ -1,4 +1,4 @@
-﻿namespace CodeBase.Game.PlaceToGrow
+﻿namespace CodeBase.Game.PlaceToGrowDir
 {
    public interface IPlaceToGrow
    {

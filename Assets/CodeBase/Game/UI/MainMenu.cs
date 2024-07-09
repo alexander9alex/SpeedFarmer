@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace CodeBase.Game.UI
 {
-   public class MainMenuView : MonoBehaviour
+   public class MainMenu : MonoBehaviour
    {
       [SerializeField] private Button _playButton;
       [SerializeField] private Button _settingsButton;

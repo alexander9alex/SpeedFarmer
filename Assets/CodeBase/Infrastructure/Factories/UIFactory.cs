@@ -52,7 +52,7 @@ namespace CodeBase.Infrastructure.Factories
       {
          GameObject mainMenuPrefab = _staticData.GetMenuData().MainMenuPrefab;
          GameObject mainMenu = Object.Instantiate(mainMenuPrefab);
-         mainMenu.GetComponent<MainMenuView>().Construct(_gameStateMachine);
+         mainMenu.GetComponent<MainMenu>().Construct(_gameStateMachine);
       }
    }
 }
