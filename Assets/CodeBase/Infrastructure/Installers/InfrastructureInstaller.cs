@@ -30,6 +30,7 @@ namespace CodeBase.Infrastructure.Installers
          Container.BindInterfacesAndSelfTo<GameInputService>().AsSingle();
          Container.BindInterfacesAndSelfTo<Interactor>().AsSingle().NonLazy();
          Container.BindInterfacesAndSelfTo<Curtain>().FromInstance(_curtain).AsSingle();
+         Container.BindInterfacesAndSelfTo<HeroHitFinder>().AsSingle();
          BindCoroutineRunner();
       }
 
@@ -47,6 +48,9 @@ namespace CodeBase.Infrastructure.Installers
          Container.BindInterfacesAndSelfTo<HeroFactory>().AsSingle();
          Container.BindInterfacesAndSelfTo<CameraFactory>().AsSingle();
          Container.BindInterfacesAndSelfTo<EcsSystemsFactory>().AsSingle();
+         Container.BindInterfacesAndSelfTo<LocationFactory>().AsSingle();
+         Container.BindInterfacesAndSelfTo<ToolsFactory>().AsSingle();
+         Container.BindInterfacesAndSelfTo<PlaceToGrowFactory>().AsSingle();
       }
 
       private void BindCoroutineRunner()

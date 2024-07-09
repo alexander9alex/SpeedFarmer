@@ -21,22 +21,22 @@ namespace CodeBase.Ecs.Systems
          {
             foreach (int j in _heroes)
             {
-               IItem item = _requests.Get1(i).Item;
+               ITool tool = _requests.Get1(i).Tool;
                GameObject hero = _heroes.Get1(j).HeroGo;
 
-               DropItem(hero, item);
+               DropItem(hero, tool);
             }
 
             _requests.GetEntity(i).Destroy();
          }
       }
 
-      private void DropItem(GameObject hero, IItem item)
+      private void DropItem(GameObject hero, ITool tool)
       {
          Vector2 lookDir = hero.GetComponent<HeroMover>().GetLookDir();
          Vector3 pos = hero.transform.position + new Vector3(lookDir.x, lookDir.y) * Distance;
 
-         GameObject itemGo = item.InstantiateView(pos);
+         GameObject itemGo = tool.InstantiateView(pos);
          itemGo.GetComponent<Rigidbody2D>().AddForce(lookDir * Force + lookDir * hero.GetComponent<Rigidbody2D>().velocity.magnitude * DropWithSpeedCoef, ForceMode2D.Impulse);
       }
    }

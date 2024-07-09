@@ -4,11 +4,11 @@ namespace CodeBase.Game.InventoryDir
 {
    public interface IInventory
    {
-      public IItem GetItem();
-      public void SetItem(IItem item);
+      public ITool GetItem();
+      public void SetItem(ITool tool);
       public bool HasItem();
-      public IItem DropItem();
+      public ITool DropItem();
       public void UseItem();
-      public event Action<IItem> ItemChanged;
+      public event Action<ITool> ItemChanged;
    }
 }

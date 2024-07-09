@@ -4,7 +4,6 @@ using CodeBase.Game.InventoryDir;
 using CodeBase.Game.UI;
 using CodeBase.Services;
 using CodeBase.StaticData;
-using Leopotam.Ecs;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -15,16 +14,12 @@ namespace CodeBase.Infrastructure.Factories
       private readonly IGameStateMachine _gameStateMachine;
       private readonly IStaticData _staticData;
       private readonly IInventory _inventory;
-      private readonly IInputService _inputService;
-      private readonly EcsWorld _world;
 
-      public UIFactory(IGameStateMachine gameStateMachine, IStaticData staticData, IInventory inventory, IInputService inputService, EcsWorld world)
+      public UIFactory(IGameStateMachine gameStateMachine, IStaticData staticData, IInventory inventory)
       {
          _gameStateMachine = gameStateMachine;
          _staticData = staticData;
          _inventory = inventory;
-         _inputService = inputService;
-         _world = world;
       }
 
       public void CreateMenu(MenuType menuType)

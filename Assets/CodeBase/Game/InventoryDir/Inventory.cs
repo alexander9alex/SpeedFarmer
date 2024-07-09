@@ -4,31 +4,31 @@ namespace CodeBase.Game.InventoryDir
 {
    public class Inventory : IInventory
    {
-      public event Action<IItem> ItemChanged;
+      public event Action<ITool> ItemChanged;
 
-      private IItem _currentItem;
+      private ITool _currentTool;
 
-      public IItem GetItem() => 
-         _currentItem;
+      public ITool GetItem() => 
+         _currentTool;
 
-      public void SetItem(IItem item)
+      public void SetItem(ITool tool)
       {
-         _currentItem = item;
-         ItemChanged?.Invoke(_currentItem);
+         _currentTool = tool;
+         ItemChanged?.Invoke(_currentTool);
       }
 
-      public IItem DropItem()
+      public ITool DropItem()
       {
-         IItem item = _currentItem;
-         _currentItem = null;
-         ItemChanged?.Invoke(_currentItem);
-         return item;
+         ITool tool = _currentTool;
+         _currentTool = null;
+         ItemChanged?.Invoke(_currentTool);
+         return tool;
       }
 
       public void UseItem() =>
-         _currentItem?.Use();
+         _currentTool?.Use();
 
       public bool HasItem() =>
-         _currentItem != null;
+         _currentTool != null;
    }
 }

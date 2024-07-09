@@ -4,6 +4,6 @@ namespace CodeBase.Ecs.Components
 {
    public struct DropItemRequest
    {
-      public IItem Item;
+      public ITool Tool;
    }
 }

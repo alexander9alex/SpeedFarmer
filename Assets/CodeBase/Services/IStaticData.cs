@@ -1,4 +1,5 @@
-﻿using CodeBase.StaticData;
+﻿using CodeBase.Data;
+using CodeBase.StaticData;
 
 namespace CodeBase.Services
 {
@@ -8,5 +9,8 @@ namespace CodeBase.Services
       public HeroData GetHeroData();
       public CameraData GetCameraData();
       public HudData GetHudData();
+      FarmLocationData GetFarmLocationData();
+      public ToolsData GetToolsData();
+      PlaceToGrowData GetPlaceToGrowData();
    }
 }

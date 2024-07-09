@@ -18,7 +18,7 @@ namespace CodeBase.Game.InventoryDir
          OnItemChanged(_inventory.GetItem());
       }
       
-      private void OnItemChanged(IItem item) =>
-         _itemIcon.sprite = item != null ? item.Icon : _nullItemSprite;
+      private void OnItemChanged(ITool tool) =>
+         _itemIcon.sprite = tool != null ? tool.Icon : _nullItemSprite;
    }
 }

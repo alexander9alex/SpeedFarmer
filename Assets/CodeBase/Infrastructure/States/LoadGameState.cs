@@ -14,9 +14,10 @@ namespace CodeBase.Infrastructure.States
       private readonly ICameraFactory _cameraFactory;
       private readonly IUIFactory _uiFactory;
       private readonly IGameStateMachine _gameStateMachine;
+      private readonly ILocationFactory _locationFactory;
 
       public LoadGameState(ISceneLoader sceneLoader, ICurtain curtain, IHeroFactory heroFactory,
-         ICameraFactory cameraFactory, IUIFactory uiFactory, IGameStateMachine gameStateMachine)
+         ICameraFactory cameraFactory, IUIFactory uiFactory, IGameStateMachine gameStateMachine, ILocationFactory locationFactory)
       {
          _sceneLoader = sceneLoader;
          _curtain = curtain;
@@ -24,6 +25,7 @@ namespace CodeBase.Infrastructure.States
          _cameraFactory = cameraFactory;
          _uiFactory = uiFactory;
          _gameStateMachine = gameStateMachine;
+         _locationFactory = locationFactory;
       }
 
       public void Enter() =>
@@ -43,6 +45,7 @@ namespace CodeBase.Infrastructure.States
          Transform hero = _heroFactory.CreateHero();
          _cameraFactory.CreateCamera(hero);
          _uiFactory.CreateHud();
+         _locationFactory.CreateFarmLocation();
       }
 
       public void Exit() { }

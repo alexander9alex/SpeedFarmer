@@ -40,11 +40,11 @@ namespace CodeBase.Services
 
       private void DropItem()
       {
-         IItem item = _inventory.DropItem();
+         ITool tool = _inventory.DropItem();
          
          EcsEntity entity = _world.NewEntity();
          ref DropItemRequest dropItemRequest = ref entity.Get<DropItemRequest>();
-         dropItemRequest.Item = item;
+         dropItemRequest.Tool = tool;
       }
    }
 }
