@@ -3,6 +3,7 @@
    public enum ActionMap
    {
       UI,
-      Hero
+      Hero,
+      UsingItem,
    }
 }

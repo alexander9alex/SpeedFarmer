@@ -27,8 +27,9 @@ namespace CodeBase.Infrastructure.Factories
          GameObject hero = Object.Instantiate(_heroData.HeroPrefab);
 
          _heroHitFinder.Construct(hero);
-         hero.GetComponent<HeroMover>().Construct(_inputService);
-         hero.GetComponent<HeroAnimator>().Construct(_inputService);
+         HeroAnimator heroAnimator = hero.GetComponent<HeroAnimator>();
+         heroAnimator.Construct(_inputService);
+         hero.GetComponent<HeroMover>().Construct(_inputService, heroAnimator);
 
          EcsEntity heroEntity = _world.NewEntity();
          ref Hero heroComponent = ref heroEntity.Get<Hero>();

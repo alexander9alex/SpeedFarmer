@@ -217,6 +217,12 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ""id"": ""8203f4bc-4c38-460f-9b40-7a0eb6cf935a"",
             ""actions"": [],
             ""bindings"": []
+        },
+        {
+            ""name"": ""UsingItem"",
+            ""id"": ""b81af8ab-3730-4059-9968-8a302804cd0e"",
+            ""actions"": [],
+            ""bindings"": []
         }
     ],
     ""controlSchemes"": [
@@ -245,6 +251,8 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         m_Hero_Drop = m_Hero.FindAction("Drop", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        // UsingItem
+        m_UsingItem = asset.FindActionMap("UsingItem", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -402,6 +410,44 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // UsingItem
+    private readonly InputActionMap m_UsingItem;
+    private List<IUsingItemActions> m_UsingItemActionsCallbackInterfaces = new List<IUsingItemActions>();
+    public struct UsingItemActions
+    {
+        private @Controls m_Wrapper;
+        public UsingItemActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputActionMap Get() { return m_Wrapper.m_UsingItem; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UsingItemActions set) { return set.Get(); }
+        public void AddCallbacks(IUsingItemActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UsingItemActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UsingItemActionsCallbackInterfaces.Add(instance);
+        }
+
+        private void UnregisterCallbacks(IUsingItemActions instance)
+        {
+        }
+
+        public void RemoveCallbacks(IUsingItemActions instance)
+        {
+            if (m_Wrapper.m_UsingItemActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUsingItemActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UsingItemActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UsingItemActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UsingItemActions @UsingItem => new UsingItemActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -418,6 +464,9 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         void OnDrop(InputAction.CallbackContext context);
     }
     public interface IUIActions
+    {
+    }
+    public interface IUsingItemActions
     {
     }
 }

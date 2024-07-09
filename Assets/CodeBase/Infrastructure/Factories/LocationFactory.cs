@@ -1,4 +1,5 @@
-﻿using CodeBase.Services;
+﻿using CodeBase.Game.Hero;
+using CodeBase.Services;
 using CodeBase.StaticData;
 using UnityEngine;
 
@@ -17,12 +18,12 @@ namespace CodeBase.Infrastructure.Factories
          _farmLocationData = staticData.GetFarmLocationData();
       }
 
-      public void CreateFarmLocation()
+      public void CreateFarmLocation(HeroAnimator heroAnimator)
       {
          FarmLocationData farmLocationData = _farmLocationData;
          GameObject farm = Object.Instantiate(farmLocationData.FarmPrefab);
 
-         _toolsFactory.CreateTools(farmLocationData.ToolSpawnPointMarkers, farm.transform);
+         _toolsFactory.CreateTools(farmLocationData.ToolSpawnPointMarkers, farm.transform, heroAnimator);
          _placeToGrowFactory.CreatePlacesToGrow(farmLocationData.PlaceToGrowSpawnPointMarkers, farm.transform);
       }
    }

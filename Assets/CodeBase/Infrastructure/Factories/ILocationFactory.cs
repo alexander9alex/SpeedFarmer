@@ -1,7 +1,9 @@
-﻿namespace CodeBase.Infrastructure.Factories
+﻿using CodeBase.Game.Hero;
+
+namespace CodeBase.Infrastructure.Factories
 {
    public interface ILocationFactory
    {
-      public void CreateFarmLocation();
+      public void CreateFarmLocation(HeroAnimator heroAnimator);
    }
 }

@@ -1,4 +1,5 @@
-﻿using CodeBase.Infrastructure.Factories;
+﻿using CodeBase.Game.Hero;
+using CodeBase.Infrastructure.Factories;
 using CodeBase.Services;
 using UnityEngine;
 
@@ -45,7 +46,7 @@ namespace CodeBase.Infrastructure.States
          Transform hero = _heroFactory.CreateHero();
          _cameraFactory.CreateCamera(hero);
          _uiFactory.CreateHud();
-         _locationFactory.CreateFarmLocation();
+         _locationFactory.CreateFarmLocation(hero.GetComponent<HeroAnimator>());
       }
 
       public void Exit() { }

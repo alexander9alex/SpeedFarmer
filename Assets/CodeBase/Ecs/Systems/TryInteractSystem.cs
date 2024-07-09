@@ -12,6 +12,7 @@ namespace CodeBase.Ecs.Systems
       private const string InteractableLayerName = "Interactable";
       private readonly int _interactableLayerMask;
       private const float Distance = 0.4f;
+      private static readonly Vector3 OffsetToLegs = new(0, -.1f, 0);
       private static readonly Vector3 CollisionBoxSize = new(.65f, .8f, 1);
       
       private EcsFilter<TryInteractRequest> _requests;
@@ -51,7 +52,7 @@ namespace CodeBase.Ecs.Systems
 
       private bool TryFindInteractable(out IInteractable interactable)
       {
-         RaycastHit2D hit = _heroHitFinder.GetHitWithMask(CollisionBoxSize, Distance, _interactableLayerMask);
+         RaycastHit2D hit = _heroHitFinder.GetHitWithMask(CollisionBoxSize, Distance, OffsetToLegs, _interactableLayerMask);
          if (hit.collider != null)
          {
             interactable = hit.collider.GetComponent<IInteractable>();

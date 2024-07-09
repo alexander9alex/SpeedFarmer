@@ -195,6 +195,12 @@
             "id": "8203f4bc-4c38-460f-9b40-7a0eb6cf935a",
             "actions": [],
             "bindings": []
+        },
+        {
+            "name": "UsingItem",
+            "id": "b81af8ab-3730-4059-9968-8a302804cd0e",
+            "actions": [],
+            "bindings": []
         }
     ],
     "controlSchemes": [

@@ -1,7 +1,6 @@
 ﻿using CodeBase.Ecs.Components;
 using CodeBase.Game.InventoryDir;
 using Leopotam.Ecs;
-using UnityEngine;
 
 namespace CodeBase.Services
 {

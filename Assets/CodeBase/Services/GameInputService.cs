@@ -44,6 +44,9 @@ namespace CodeBase.Services
             case ActionMap.Hero:
                ChangeActionMap(_controls.Hero);
                break;
+            case ActionMap.UsingItem:
+               ChangeActionMap(_controls.UsingItem);
+               break;
             default:
                throw new ArgumentOutOfRangeException(nameof(map), map, null);
          }
