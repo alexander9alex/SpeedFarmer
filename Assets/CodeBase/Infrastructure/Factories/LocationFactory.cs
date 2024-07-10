@@ -1,4 +1,5 @@
-﻿using CodeBase.Game.Hero;
+﻿using CodeBase.Data.Items.Seeds;
+using CodeBase.Game.Hero;
 using CodeBase.Services;
 using CodeBase.StaticData;
 using UnityEngine;
@@ -10,10 +11,12 @@ namespace CodeBase.Infrastructure.Factories
       private readonly FarmLocationData _farmLocationData;
       private readonly IToolsFactory _toolsFactory;
       private readonly IPlaceToGrowFactory _placeToGrowFactory;
+      private readonly ISeedsFactory _seedsFactory;
 
-      public LocationFactory(IToolsFactory toolsFactory, IPlaceToGrowFactory placeToGrowFactory, IStaticData staticData)
+      public LocationFactory(IToolsFactory toolsFactory, IPlaceToGrowFactory placeToGrowFactory, IStaticData staticData, ISeedsFactory seedsFactory)
       {
          _placeToGrowFactory = placeToGrowFactory;
+         _seedsFactory = seedsFactory;
          _toolsFactory = toolsFactory;
          _farmLocationData = staticData.GetFarmLocationData();
       }
@@ -23,8 +26,16 @@ namespace CodeBase.Infrastructure.Factories
          FarmLocationData farmLocationData = _farmLocationData;
          GameObject farm = Object.Instantiate(farmLocationData.FarmPrefab);
 
-         _toolsFactory.CreateTools(farmLocationData.ToolSpawnPointMarkers, farm.transform, heroAnimator);
-         _placeToGrowFactory.CreatePlacesToGrow(farmLocationData.PlaceToGrowSpawnPointMarkers, farm.transform);
+         _toolsFactory.SetParent(farm.transform);
+         _placeToGrowFactory.SetParent(farm.transform);
+         _seedsFactory.SetParent(farm.transform);
+         
+         _toolsFactory.CreateTools(farmLocationData.ToolSpawnPointMarkers);
+         _placeToGrowFactory.CreatePlacesToGrow(farmLocationData.PlaceToGrowSpawnPointMarkers);
+         
+         _seedsFactory.CreateSeed(SeedType.Wheat, new Vector3(1, 1));
+         _seedsFactory.CreateSeed(SeedType.Wheat, new Vector3(-1, -1));
+         _seedsFactory.CreateSeed(SeedType.Wheat, new Vector3(4, -2));
       }
    }
 }

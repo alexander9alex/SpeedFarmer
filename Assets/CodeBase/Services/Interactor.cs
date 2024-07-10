@@ -1,5 +1,6 @@
 ﻿using CodeBase.Ecs.Components;
 using CodeBase.Game.InventoryDir;
+using CodeBase.Game.Items;
 using Leopotam.Ecs;
 
 namespace CodeBase.Services
@@ -39,11 +40,11 @@ namespace CodeBase.Services
 
       private void DropItem()
       {
-         ITool tool = _inventory.DropItem();
+         IItem item = _inventory.DropItem();
          
          EcsEntity entity = _world.NewEntity();
          ref DropItemRequest dropItemRequest = ref entity.Get<DropItemRequest>();
-         dropItemRequest.Tool = tool;
+         dropItemRequest.ItemData = item;
       }
    }
 }

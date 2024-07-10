@@ -51,6 +51,7 @@ namespace CodeBase.Infrastructure.Installers
          Container.BindInterfacesAndSelfTo<LocationFactory>().AsSingle();
          Container.BindInterfacesAndSelfTo<ToolsFactory>().AsSingle();
          Container.BindInterfacesAndSelfTo<PlaceToGrowFactory>().AsSingle();
+         Container.BindInterfacesAndSelfTo<SeedsFactory>().AsSingle();
       }
 
       private void BindCoroutineRunner()
@@ -64,6 +65,7 @@ namespace CodeBase.Infrastructure.Installers
       {
          Container.BindInterfacesAndSelfTo<TryInteractSystem>().AsSingle();
          Container.BindInterfacesAndSelfTo<DropItemSystem>().AsSingle();
+         Container.BindInterfacesAndSelfTo<ChangeHeroAnimationSystem>().AsSingle();
       }
    }
 }

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using CodeBase.Data;
+using CodeBase.Game.Items;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace CodeBase.Game.InventoryDir
@@ -15,10 +17,10 @@ namespace CodeBase.Game.InventoryDir
          _inventory = inventory;
          _inventory.ItemChanged += OnItemChanged;
          
-         OnItemChanged(_inventory.GetItem());
+         OnItemChanged(_inventory.GetItemData());
       }
       
-      private void OnItemChanged(ITool tool) =>
-         _itemIcon.sprite = tool != null ? tool.Icon : _nullItemSprite;
+      private void OnItemChanged(IItem item) =>
+         _itemIcon.sprite = item != null ? item.Icon : _nullItemSprite;
    }
 }

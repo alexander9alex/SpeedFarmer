@@ -1,9 +1,9 @@
-﻿using CodeBase.Game.InventoryDir;
+﻿using CodeBase.Game.Items;
 
 namespace CodeBase.Ecs.Components
 {
    public struct DropItemRequest
    {
-      public ITool Tool;
+      public IItem ItemData;
    }
 }

@@ -1,37 +1,76 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using CodeBase.Data;
-using CodeBase.Data.ToolDir;
-using CodeBase.Game.Hero;
-using CodeBase.Game.InventoryDir;
+using CodeBase.Data.Items.Tools;
+using CodeBase.Game.Items;
 using CodeBase.Services;
 using CodeBase.StaticData;
+using CodeBase.StaticData.Items;
+using Leopotam.Ecs;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace CodeBase.Infrastructure.Factories
 {
-   class ToolsFactory : IToolsFactory
+   public class ToolsFactory : IToolsFactory
    {
-      private readonly ToolsData _toolsData;
       private readonly IHeroHitFinder _heroHitFinder;
+      private readonly EcsWorld _world;
+      private readonly ToolsData _toolsData;
+      private readonly ToolPrefabsData _toolPrefabsData;
 
-      public ToolsFactory(IStaticData staticData, IHeroHitFinder heroHitFinder)
+      private Transform _parent;
+
+      public ToolsFactory(IStaticData staticData, IHeroHitFinder heroHitFinder, EcsWorld world)
       {
          _heroHitFinder = heroHitFinder;
+         _world = world;
          _toolsData = staticData.GetToolsData();
+         _toolPrefabsData = staticData.GetToolPrefabs();
       }
 
-      public void CreateTools(List<ToolSpawnPointMarker> markers, Transform parent, HeroAnimator heroAnimator)
+      public void SetParent(Transform parent)
+      {
+         _parent = new GameObject("Tools").transform;
+         _parent.parent = parent;
+      }
+
+      public void CreateTools(List<ToolSpawnPointMarker> markers)
       {
          foreach (ToolSpawnPointMarker marker in markers)
-            CreateTool(marker, parent, heroAnimator);
+            CreateTool(marker);
       }
 
-      private void CreateTool(ToolSpawnPointMarker marker, Transform parent, HeroAnimator heroAnimator)
+      private void CreateTool(ToolSpawnPointMarker marker)
       {
-         GameObject prefab = _toolsData.ToolPrefabs.First(tool => tool.ToolType == marker.ToolType).Prefab;
-         GameObject tool = Object.Instantiate(prefab, marker.Position, Quaternion.identity, parent);
-         tool.GetComponent<ITool>().Construct(_heroHitFinder, heroAnimator);
+         GameObject tool = CreateTool(marker.ToolType);
+         tool.transform.position = marker.Position;
+      }
+
+      public GameObject CreateTool(ToolType toolType, Vector3 pos)
+      {
+         GameObject item = CreateTool(toolType);
+         item.transform.position = pos;
+         return item;
+      }
+
+      public GameObject CreateTool(ToolType toolType)
+      {
+         switch (toolType)
+         {
+            case ToolType.Hoe:
+               return CreateHoe();
+            default:
+               throw new ArgumentOutOfRangeException(nameof(toolType), toolType, null);
+         }
+      }
+
+      private GameObject CreateHoe()
+      {
+         ToolData toolData = _toolsData.Data.First(tool => tool.ToolType == ToolType.Hoe);
+         GameObject hoeGo = Object.Instantiate(_toolPrefabsData.Prefabs.First(tool => tool.ToolType == ToolType.Hoe).Prefab, _parent);
+         Hoe hoe = new Hoe(_world, _heroHitFinder, toolData, hoeGo.GetComponent<IItemView>());
+         return hoeGo;
       }
    }
 }

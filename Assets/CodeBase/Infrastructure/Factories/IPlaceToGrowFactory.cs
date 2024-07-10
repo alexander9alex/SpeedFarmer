@@ -5,6 +5,7 @@ namespace CodeBase.Infrastructure.Factories
 {
    public interface IPlaceToGrowFactory
    {
-      void CreatePlacesToGrow(List<Vector2> markers, Transform parent);
+      public void SetParent(Transform parent);
+      public void CreatePlacesToGrow(List<Vector2> markers);
    }
 }

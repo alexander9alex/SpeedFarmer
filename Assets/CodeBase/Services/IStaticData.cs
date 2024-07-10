@@ -1,5 +1,5 @@
-﻿using CodeBase.Data;
-using CodeBase.StaticData;
+﻿using CodeBase.StaticData;
+using CodeBase.StaticData.Items;
 
 namespace CodeBase.Services
 {
@@ -12,5 +12,8 @@ namespace CodeBase.Services
       FarmLocationData GetFarmLocationData();
       public ToolsData GetToolsData();
       PlaceToGrowData GetPlaceToGrowData();
+      ToolPrefabsData GetToolPrefabs();
+      SeedPrefabsData GetSeedPrefabsData();
+      SeedsData GetSeedsData();
    }
 }

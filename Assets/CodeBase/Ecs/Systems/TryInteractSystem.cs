@@ -1,6 +1,8 @@
-﻿using CodeBase.Data;
+﻿using System.Collections.Generic;
+using CodeBase.Data.FinderData;
 using CodeBase.Ecs.Components;
 using CodeBase.Game.InventoryDir;
+using CodeBase.Game.Items;
 using CodeBase.Services;
 using Leopotam.Ecs;
 using UnityEngine;
@@ -9,22 +11,17 @@ namespace CodeBase.Ecs.Systems
 {
    public class TryInteractSystem : IEcsRunSystem
    {
-      private const string InteractableLayerName = "Interactable";
-      private readonly int _interactableLayerMask;
-      private const float Distance = 0.4f;
-      private static readonly Vector3 OffsetToLegs = new(0, -.1f, 0);
-      private static readonly Vector3 CollisionBoxSize = new(.65f, .8f, 1);
-      
       private EcsFilter<TryInteractRequest> _requests;
 
       private readonly IInventory _inventory;
       private readonly IHeroHitFinder _heroHitFinder;
+      private readonly int _interactableLayerMask;
 
       public TryInteractSystem(IInventory inventory, IHeroHitFinder heroHitFinder)
       {
          _inventory = inventory;
          _heroHitFinder = heroHitFinder;
-         _interactableLayerMask = 1 << LayerMask.NameToLayer(InteractableLayerName);
+         _interactableLayerMask = 1 << LayerMask.NameToLayer(InteractableHitFinderData.InteractableLayerName);
       }
 
       public void Run()
@@ -40,23 +37,28 @@ namespace CodeBase.Ecs.Systems
 
       private void TryInteract(IInteractable interactable)
       {
-         if (interactable is ITool item && !_inventory.HasItem())
-            TakeItem(item);
+         if (interactable is IItemView itemView && !_inventory.HasItem())
+            TakeItem(itemView.Item);
       }
 
-      private void TakeItem(ITool tool)
+      private void TakeItem(IItem item)
       {
-         tool.DestroyView();
-         _inventory.SetItem(tool);
+         item.DestroyView();
+         _inventory.SetItem(item);
       }
 
       private bool TryFindInteractable(out IInteractable interactable)
       {
-         RaycastHit2D hit = _heroHitFinder.GetHitWithMask(CollisionBoxSize, Distance, OffsetToLegs, _interactableLayerMask);
-         if (hit.collider != null)
+         List<RaycastHit2D> hits = _heroHitFinder.GetHitWithMask(InteractableHitFinderData.CollisionBoxSize,
+            InteractableHitFinderData.Distance, InteractableHitFinderData.Offset, _interactableLayerMask);
+
+         foreach (RaycastHit2D hit in hits)
          {
-            interactable = hit.collider.GetComponent<IInteractable>();
-            return true;
+            if (hit.collider != null)
+            {
+               interactable = hit.collider.GetComponent<IInteractable>();
+               return true;
+            }
          }
 
          interactable = null;

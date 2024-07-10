@@ -1,14 +1,16 @@
 ﻿using System;
+using CodeBase.Data;
+using CodeBase.Game.Items;
 
 namespace CodeBase.Game.InventoryDir
 {
    public interface IInventory
    {
-      public ITool GetItem();
-      public void SetItem(ITool tool);
+      public event Action<IItem> ItemChanged;
+      public IItem GetItemData();
+      public void SetItem(IItem item);
       public bool HasItem();
-      public ITool DropItem();
+      public IItem DropItem();
       public void UseItem();
-      public event Action<ITool> ItemChanged;
    }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using CodeBase.Data;
-using CodeBase.Data.ToolDir;
+using CodeBase.Data.Items.Tools;
 using UnityEngine;
 using UnityEngine.Serialization;
 

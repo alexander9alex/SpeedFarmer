@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using CodeBase.Game.Hero;
 using CodeBase.HelpTools;
 using UnityEngine;
@@ -14,7 +15,7 @@ namespace CodeBase.Services
       public void Construct(GameObject hero) =>
          _hero = hero;
 
-      public RaycastHit2D GetHitWithMask(Vector2 boxSize, float distance, Vector3 offset, LayerMask layerMask)
+      public List<RaycastHit2D> GetHitWithMask(Vector2 boxSize, float distance, Vector3 offset, LayerMask layerMask)
       {
          if (_hero == null)
             return default;
@@ -26,14 +27,7 @@ namespace CodeBase.Services
 
          PhysicsDebug.DrawBox(boxCenter, boxSize / 2, ColliderVisibleTime);
          Physics2D.BoxCastNonAlloc(boxCenter, boxSize, 0, Vector2.zero, hits, BoxDistanceZ, layerMask);
-         return hits[0];
-      }
-
-      public RaycastHit2D GetHitWithMask(Vector2 boxSize, Dictionary<Vector2, float> distances,
-         Dictionary<Vector2, Vector2> offsets, LayerMask layerMask)
-      {
-         Vector2 lookDir = GetLookDir();
-         return GetHitWithMask(boxSize, distances[lookDir], offsets[lookDir], layerMask);
+         return hits.ToList();
       }
 
       private Vector2 GetLookDir()

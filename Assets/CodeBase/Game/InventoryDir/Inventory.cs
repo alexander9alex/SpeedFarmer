@@ -1,34 +1,36 @@
 ﻿using System;
+using CodeBase.Data;
+using CodeBase.Game.Items;
 
 namespace CodeBase.Game.InventoryDir
 {
    public class Inventory : IInventory
    {
-      public event Action<ITool> ItemChanged;
+      public event Action<IItem> ItemChanged;
 
-      private ITool _currentTool;
+      private IItem _currentItem;
 
-      public ITool GetItem() => 
-         _currentTool;
+      public IItem GetItemData() => 
+         _currentItem;
 
-      public void SetItem(ITool tool)
+      public void SetItem(IItem item)
       {
-         _currentTool = tool;
-         ItemChanged?.Invoke(_currentTool);
+         _currentItem = item;
+         ItemChanged?.Invoke(_currentItem);
       }
 
-      public ITool DropItem()
+      public IItem DropItem()
       {
-         ITool tool = _currentTool;
-         _currentTool = null;
-         ItemChanged?.Invoke(_currentTool);
-         return tool;
+         IItem item = _currentItem;
+         _currentItem = null;
+         ItemChanged?.Invoke(_currentItem);
+         return item;
       }
 
       public void UseItem() =>
-         _currentTool?.Use();
+         _currentItem?.Use();
 
       public bool HasItem() =>
-         _currentTool != null;
+         _currentItem != null;
    }
 }

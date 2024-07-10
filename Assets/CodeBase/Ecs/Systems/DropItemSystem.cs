@@ -1,6 +1,8 @@
-﻿using CodeBase.Ecs.Components;
+﻿using System;
+using CodeBase.Ecs.Components;
 using CodeBase.Game.Hero;
-using CodeBase.Game.InventoryDir;
+using CodeBase.Game.Items;
+using CodeBase.Infrastructure.Factories;
 using Leopotam.Ecs;
 using UnityEngine;
 
@@ -14,30 +16,60 @@ namespace CodeBase.Ecs.Systems
 
       private EcsFilter<DropItemRequest> _requests;
       private EcsFilter<Hero> _heroes;
-      
+
+      private readonly IToolsFactory _toolsFactory;
+      private readonly ISeedsFactory _seedsFactory;
+
+      public DropItemSystem(IToolsFactory toolsFactory, ISeedsFactory seedsFactory)
+      {
+         _toolsFactory = toolsFactory;
+         _seedsFactory = seedsFactory;
+      }
+
       public void Run()
       {
          foreach (var i in _requests)
          {
             foreach (int j in _heroes)
             {
-               ITool tool = _requests.Get1(i).Tool;
+               IItem item = _requests.Get1(i).ItemData;
                GameObject hero = _heroes.Get1(j).HeroGo;
 
-               DropItem(hero, tool);
+               DropItem(hero, item);
             }
 
             _requests.GetEntity(i).Destroy();
          }
       }
 
-      private void DropItem(GameObject hero, ITool tool)
+      private void DropItem(GameObject hero, IItem item)
       {
          Vector2 lookDir = hero.GetComponent<HeroMover>().GetLookDir();
          Vector3 pos = hero.transform.position + new Vector3(lookDir.x, lookDir.y) * Distance;
 
-         GameObject itemGo = tool.InstantiateView(pos);
-         itemGo.GetComponent<Rigidbody2D>().AddForce(lookDir * Force + lookDir * hero.GetComponent<Rigidbody2D>().velocity.magnitude * DropWithSpeedCoef, ForceMode2D.Impulse);
+         GameObject itemGo = CreateItem(item, pos);
+         
+         itemGo.GetComponent<Rigidbody2D>()
+            .AddForce(lookDir * Force + lookDir * hero.GetComponent<Rigidbody2D>().velocity.magnitude * DropWithSpeedCoef,
+               ForceMode2D.Impulse);
+      }
+
+      private GameObject CreateItem(IItem item, Vector3 pos)
+      {
+         GameObject itemGo;
+         switch (item)
+         {
+            case ITool tool:
+               itemGo = _toolsFactory.CreateTool(tool.ToolData.ToolType, pos);
+               break;
+            case ISeed seed:
+               itemGo = _seedsFactory.CreateSeed(seed.SeedData.SeedType, pos);
+               break;
+            default:
+               throw new ArgumentOutOfRangeException(nameof(item));
+         }
+
+         return itemGo;
       }
    }
 }
