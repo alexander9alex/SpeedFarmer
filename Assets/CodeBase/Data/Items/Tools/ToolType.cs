@@ -2,6 +2,7 @@
 {
    public enum ToolType
    {
-      Hoe
+      Hoe,
+      Axe,
    }
 }

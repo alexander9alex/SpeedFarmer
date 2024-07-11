@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CodeBase.StaticData.Items
 {
-   [CreateAssetMenu(menuName = "Static Data/Tools Data", fileName = "ToolsData")]
+   [CreateAssetMenu(menuName = "Static Data/Items/Tools Data", fileName = "ToolsData")]
    public class ToolsData : ScriptableObject
    {
       public List<ToolData> Data;

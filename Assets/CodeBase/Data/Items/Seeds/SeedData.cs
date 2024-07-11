@@ -11,7 +11,6 @@ namespace CodeBase.Data.Items.Seeds
       public Sprite Icon;
       public List<Sprite> GrowSprites;
       public Sprite GrownSprite;
-      public GameObject FruitPrefab;
 
       [Header("Balance data")]
       public float GrowTime = 15;

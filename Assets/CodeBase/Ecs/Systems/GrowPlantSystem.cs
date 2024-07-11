@@ -1,4 +1,5 @@
-﻿using CodeBase.Ecs.Components;
+﻿using CodeBase.Data;
+using CodeBase.Ecs.Components;
 using Leopotam.Ecs;
 using UnityEngine;
 
@@ -18,11 +19,8 @@ namespace CodeBase.Ecs.Systems
       {
          ref GrowingPlant growingPlant = ref _plants.Get1(entityId);
          growingPlant.GrowTime -= Time.deltaTime;
-         if (growingPlant.GrowTime <= 0)
-         {
+         if (growingPlant.PlantState == PlantState.Growing && growingPlant.GrowTime <= 0)
             growingPlant.OnGrow?.Invoke();
-            _plants.GetEntity(entityId).Destroy();
-         }
       }
    }
 }

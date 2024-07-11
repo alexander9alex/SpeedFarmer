@@ -25,6 +25,7 @@ namespace CodeBase.Game.PlaceToGrowDir
 
       private IInventory _inventory;
       private EcsWorld _world;
+      private EcsEntity _plantEntity;
 
       public void Construct(IInventory inventory, IStaticData staticData, EcsWorld world)
       {
@@ -41,19 +42,44 @@ namespace CodeBase.Game.PlaceToGrowDir
       {
          _currentSeed = seed;
          _currentPlantSpriteId = 0;
-         _currentPlantState = PlantState.Grown;
+         _currentPlantState = PlantState.Growing;
 
          _plantSr.sprite = _currentSeed.SeedData.GrowSprites[0];
          _inventory.DropItem();
 
          UpdateDirt(PlaceToGrowDirt.Simple);
-         CreateGrowPlant();
+         
+         _plantEntity = _world.NewEntity();
+         UpdateGrowPlant();
 
          Debug.Log("Planted!");
       }
 
+      public void Chop()
+      {
+         ChopPlant(_currentSeed, _currentPlantState);
+         
+         _plantSr.sprite = null;
+         _currentSeed = null;
+         _currentPlantSpriteId = 0;
+         _currentPlantState = PlantState.Empty;
+         
+         Debug.Log("Planted!");
+      }
+
+      private void ChopPlant(ISeed seed, PlantState plantState)
+      {
+         ref ChopPlant growingPlant = ref _plantEntity.Get<ChopPlant>();
+         growingPlant.PlantState = plantState;
+         growingPlant.Position = transform.position;
+         growingPlant.SeedType = seed.SeedData.SeedType;
+      }
+
       private void OnGrow()
       {
+         ref GrowingPlant growingPlant = ref _plantEntity.Get<GrowingPlant>();
+         growingPlant.GrowTime = _currentSeed.SeedData.GrowTime;
+         
          _currentPlantSpriteId++;
 
          if (IsGrown())
@@ -64,15 +90,15 @@ namespace CodeBase.Game.PlaceToGrowDir
          else
          {
             _plantSr.sprite = _currentSeed.SeedData.GrowSprites[_currentPlantSpriteId];
-            CreateGrowPlant();
+            UpdateGrowPlant();
          }
       }
 
-      private void CreateGrowPlant()
+      private void UpdateGrowPlant()
       {
-         EcsEntity entity = _world.NewEntity();
-         ref GrowingPlant growingPlant = ref entity.Get<GrowingPlant>();
+         ref GrowingPlant growingPlant = ref _plantEntity.Get<GrowingPlant>();
          growingPlant.GrowTime = _currentSeed.SeedData.GrowTime;
+         growingPlant.PlantState = _currentPlantState;
          growingPlant.OnGrow = OnGrow;
       }
 
@@ -83,11 +109,15 @@ namespace CodeBase.Game.PlaceToGrowDir
       }
 
       public bool CanPlow() =>
-         _currentDirtState == PlaceToGrowDirt.Simple;
+         _currentDirtState == PlaceToGrowDirt.Simple &&
+         _currentPlantState == PlantState.Empty;
 
       public bool CanPlant() =>
          _currentPlantState == PlantState.Empty &&
          _currentDirtState == PlaceToGrowDirt.Plowed;
+
+      public bool CanChop() =>
+         _currentPlantState != PlantState.Empty;
 
       private bool IsGrown() =>
          _currentPlantSpriteId > _currentSeed.SeedData.GrowSprites.Count - 1;

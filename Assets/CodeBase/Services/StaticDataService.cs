@@ -17,6 +17,8 @@ namespace CodeBase.Services
       private const string ToolPrefabsDataPath = "StaticData/Items/ToolPrefabsData";
       private const string SeedsDataPath = "StaticData/Items/SeedsData";
       private const string SeedPrefabsDataPath = "StaticData/Items/SeedPrefabsData";
+      private const string FruitPrefabsDataPath = "StaticData/Items/FruitPrefabsData";
+      private const string FruitsDataPath = "StaticData/Items/FruitsData";
 
       public MenuData GetMenuData() =>
          Resources.Load<MenuData>(MenuDataPath);
@@ -39,7 +41,7 @@ namespace CodeBase.Services
       public ToolsData GetToolsData() =>
          Resources.Load<ToolsData>(ToolsDataPath);
 
-      public ToolPrefabsData GetToolPrefabs() =>
+      public ToolPrefabsData GetToolPrefabsData() =>
          Resources.Load<ToolPrefabsData>(ToolPrefabsDataPath);
 
       public SeedsData GetSeedsData() =>
@@ -47,5 +49,11 @@ namespace CodeBase.Services
 
       public SeedPrefabsData GetSeedPrefabsData() =>
          Resources.Load<SeedPrefabsData>(SeedPrefabsDataPath);
+
+      public FruitsData GetFruitsData() =>
+         Resources.Load<FruitsData>(FruitsDataPath);
+
+      public FruitPrefabsData GetFruitPrefabsData() =>
+         Resources.Load<FruitPrefabsData>(FruitPrefabsDataPath);
    }
 }

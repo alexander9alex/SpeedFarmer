@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a758491fc134500a5394156a7ea419d, type: 3}
+  m_Name: FruitPrefabsData
+  m_EditorClassIdentifier: 
+  Prefabs:
+  - SeedType: 0
+    Prefab: {fileID: 7488049205266411658, guid: 4af6cdcf105fb8040b98de66ceba09a9, type: 3}

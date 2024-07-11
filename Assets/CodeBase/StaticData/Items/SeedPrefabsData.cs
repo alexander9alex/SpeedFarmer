@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CodeBase.StaticData.Items
 {
-   [CreateAssetMenu(menuName = "Static Data/Seed Prefabs Data", fileName = "SeedPrefabsData")]
+   [CreateAssetMenu(menuName = "Static Data/Items/Seed Prefabs Data", fileName = "SeedPrefabsData")]
    public class SeedPrefabsData : ScriptableObject
    {
       public List<SeedPrefab> Prefabs;

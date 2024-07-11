@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CodeBase.StaticData.Items
 {
-   [CreateAssetMenu(menuName = "Static Data/Seeds Data", fileName = "SeedsData")]
+   [CreateAssetMenu(menuName = "Static Data/Items/Seeds Data", fileName = "SeedsData")]
    public class SeedsData : ScriptableObject
    {
       public List<SeedData> Data;

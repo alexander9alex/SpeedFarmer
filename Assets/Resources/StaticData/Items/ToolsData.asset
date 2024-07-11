@@ -15,3 +15,5 @@ MonoBehaviour:
   Data:
   - ToolType: 0
     Icon: {fileID: -1667733015, guid: fd43130692d90ae4cb4cedb129eee4a1, type: 3}
+  - ToolType: 1
+    Icon: {fileID: 68357218, guid: fd43130692d90ae4cb4cedb129eee4a1, type: 3}

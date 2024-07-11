@@ -317,7 +317,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_8
+      name: Chop_Down_0
       rect:
         serializedVersion: 2
         x: 0
@@ -338,7 +338,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_9
+      name: Chop_Down_1
       rect:
         serializedVersion: 2
         x: 48
@@ -359,7 +359,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_10
+      name: Chop_Up_0
       rect:
         serializedVersion: 2
         x: 0
@@ -380,7 +380,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_11
+      name: Chop_Up_1
       rect:
         serializedVersion: 2
         x: 48
@@ -401,7 +401,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_12
+      name: Chop_Left_0
       rect:
         serializedVersion: 2
         x: 0
@@ -422,7 +422,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_13
+      name: Chop_Left_1
       rect:
         serializedVersion: 2
         x: 48
@@ -443,7 +443,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_14
+      name: Chop_Right_0
       rect:
         serializedVersion: 2
         x: 0
@@ -464,7 +464,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_15
+      name: Chop_Right_1
       rect:
         serializedVersion: 2
         x: 48
@@ -663,12 +663,6 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Basic Charakter Actions_10: 450331043
-      Basic Charakter Actions_11: 1883038004
-      Basic Charakter Actions_12: 710308658
-      Basic Charakter Actions_13: 1267722192
-      Basic Charakter Actions_14: 1931344029
-      Basic Charakter Actions_15: 611643124
       Basic Charakter Actions_16: -1618213077
       Basic Charakter Actions_17: -324380369
       Basic Charakter Actions_18: -1877169346
@@ -677,8 +671,14 @@ TextureImporter:
       Basic Charakter Actions_21: 108791772
       Basic Charakter Actions_22: 590832079
       Basic Charakter Actions_23: -2006424537
-      Basic Charakter Actions_8: 2059792314
-      Basic Charakter Actions_9: 364508258
+      Chop_Down_0: 2059792314
+      Chop_Down_1: 364508258
+      Chop_Left_0: 710308658
+      Chop_Left_1: 1267722192
+      Chop_Right_0: 1931344029
+      Chop_Right_1: 611643124
+      Chop_Up_0: 450331043
+      Chop_Up_1: 1883038004
       Plowing_Down_0: 953140013
       Plowing_Down_1: 677139878
       Plowing_Left_0: 2014546278

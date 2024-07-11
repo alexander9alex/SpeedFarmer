@@ -52,6 +52,7 @@ namespace CodeBase.Infrastructure.Installers
          Container.BindInterfacesAndSelfTo<ToolsFactory>().AsSingle();
          Container.BindInterfacesAndSelfTo<PlaceToGrowFactory>().AsSingle();
          Container.BindInterfacesAndSelfTo<SeedsFactory>().AsSingle();
+         Container.BindInterfacesAndSelfTo<FruitsFactory>().AsSingle();
       }
 
       private void BindCoroutineRunner()
@@ -67,6 +68,7 @@ namespace CodeBase.Infrastructure.Installers
          Container.BindInterfacesAndSelfTo<DropItemSystem>().AsSingle();
          Container.BindInterfacesAndSelfTo<ChangeHeroAnimationSystem>().AsSingle();
          Container.BindInterfacesAndSelfTo<GrowPlantSystem>().AsSingle();
+         Container.BindInterfacesAndSelfTo<ChopPlantSystem>().AsSingle();
       }
    }
 }

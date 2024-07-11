@@ -4,7 +4,6 @@ using System.Linq;
 using CodeBase.Data.Items.Tools;
 using CodeBase.Game.Items;
 using CodeBase.Services;
-using CodeBase.StaticData;
 using CodeBase.StaticData.Items;
 using Leopotam.Ecs;
 using UnityEngine;
@@ -26,7 +25,7 @@ namespace CodeBase.Infrastructure.Factories
          _heroHitFinder = heroHitFinder;
          _world = world;
          _toolsData = staticData.GetToolsData();
-         _toolPrefabsData = staticData.GetToolPrefabs();
+         _toolPrefabsData = staticData.GetToolPrefabsData();
       }
 
       public void SetParent(Transform parent)
@@ -56,21 +55,30 @@ namespace CodeBase.Infrastructure.Factories
 
       public GameObject CreateTool(ToolType toolType)
       {
+         ToolData toolData = _toolsData.Data.First(tool => tool.ToolType == toolType);
+         GameObject toolGo = Object.Instantiate(_toolPrefabsData.Prefabs.First(tool => tool.ToolType == toolType).Prefab, _parent);
+
          switch (toolType)
          {
             case ToolType.Hoe:
-               return CreateHoe();
+               return CreateHoe(toolData, toolGo);
+            case ToolType.Axe:
+               return CreateAxe(toolData, toolGo);
             default:
                throw new ArgumentOutOfRangeException(nameof(toolType), toolType, null);
          }
       }
 
-      private GameObject CreateHoe()
+      private GameObject CreateHoe(ToolData toolData, GameObject go)
       {
-         ToolData toolData = _toolsData.Data.First(tool => tool.ToolType == ToolType.Hoe);
-         GameObject hoeGo = Object.Instantiate(_toolPrefabsData.Prefabs.First(tool => tool.ToolType == ToolType.Hoe).Prefab, _parent);
-         Hoe hoe = new Hoe(_world, _heroHitFinder, toolData, hoeGo.GetComponent<IItemView>());
-         return hoeGo;
+         new Hoe(_world, _heroHitFinder, toolData, go.GetComponent<IItemView>());
+         return go;
+      }
+
+      private GameObject CreateAxe(ToolData toolData, GameObject go)
+      {
+         new Axe(_world, _heroHitFinder, toolData, go.GetComponent<IItemView>());
+         return go;
       }
    }
 }

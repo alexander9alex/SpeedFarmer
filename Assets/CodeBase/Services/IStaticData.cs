@@ -12,8 +12,10 @@ namespace CodeBase.Services
       FarmLocationData GetFarmLocationData();
       public ToolsData GetToolsData();
       PlaceToGrowData GetPlaceToGrowData();
-      ToolPrefabsData GetToolPrefabs();
+      ToolPrefabsData GetToolPrefabsData();
       SeedPrefabsData GetSeedPrefabsData();
       SeedsData GetSeedsData();
+      FruitPrefabsData GetFruitPrefabsData();
+      FruitsData GetFruitsData();
    }
 }

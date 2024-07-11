@@ -19,11 +19,13 @@ namespace CodeBase.Ecs.Systems
 
       private readonly IToolsFactory _toolsFactory;
       private readonly ISeedsFactory _seedsFactory;
+      private readonly IFruitsFactory _fruitsFactory;
 
-      public DropItemSystem(IToolsFactory toolsFactory, ISeedsFactory seedsFactory)
+      public DropItemSystem(IToolsFactory toolsFactory, ISeedsFactory seedsFactory, IFruitsFactory fruitsFactory)
       {
          _toolsFactory = toolsFactory;
          _seedsFactory = seedsFactory;
+         _fruitsFactory = fruitsFactory;
       }
 
       public void Run()
@@ -64,6 +66,9 @@ namespace CodeBase.Ecs.Systems
                break;
             case ISeed seed:
                itemGo = _seedsFactory.CreateSeed(seed.SeedData.SeedType, pos);
+               break;
+            case IFruit fruit:
+               itemGo = _fruitsFactory.CreateFruit(fruit.FruitData.SeedType, pos);
                break;
             default:
                throw new ArgumentOutOfRangeException(nameof(item));
