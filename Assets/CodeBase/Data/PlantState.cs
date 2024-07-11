@@ -3,7 +3,7 @@
    public enum PlantState
    {
       Empty,
-      Growing,
+      Grown,
       HasGrown,
       Wilted,
    }

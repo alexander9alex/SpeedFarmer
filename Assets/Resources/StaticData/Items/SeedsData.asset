@@ -19,5 +19,6 @@ MonoBehaviour:
     - {fileID: -2001044116, guid: 53ffb552a8db6424580df090d8d41687, type: 3}
     - {fileID: 550900842, guid: 53ffb552a8db6424580df090d8d41687, type: 3}
     - {fileID: 407837866, guid: 53ffb552a8db6424580df090d8d41687, type: 3}
-    - {fileID: -880826106, guid: 53ffb552a8db6424580df090d8d41687, type: 3}
+    GrownSprite: {fileID: -880826106, guid: 53ffb552a8db6424580df090d8d41687, type: 3}
     FruitPrefab: {fileID: 7488049205266411658, guid: 4af6cdcf105fb8040b98de66ceba09a9, type: 3}
+    GrowTime: 15

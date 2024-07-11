@@ -3,6 +3,7 @@ using CodeBase.Game.InventoryDir;
 using CodeBase.Game.PlaceToGrowDir;
 using CodeBase.Services;
 using CodeBase.StaticData;
+using Leopotam.Ecs;
 using UnityEngine;
 
 namespace CodeBase.Infrastructure.Factories
@@ -13,11 +14,13 @@ namespace CodeBase.Infrastructure.Factories
       private readonly IStaticData _staticData;
       private Transform _parent;
       private readonly IInventory _inventory;
+      private readonly EcsWorld _world;
 
-      public PlaceToGrowFactory(IStaticData staticData, IInventory inventory)
+      public PlaceToGrowFactory(IStaticData staticData, IInventory inventory, EcsWorld world)
       {
          _staticData = staticData;
          _inventory = inventory;
+         _world = world;
          _placeToGrowData = _staticData.GetPlaceToGrowData();
       }
 
@@ -37,7 +40,7 @@ namespace CodeBase.Infrastructure.Factories
       private void CreatePlaceToGrow(Vector2 pos)
       {
          GameObject placeToGrowGo = Object.Instantiate(_placeToGrowData.PlaceToGrowPrefab, pos, Quaternion.identity, _parent);
-         placeToGrowGo.GetComponent<PlaceToGrow>().Construct(_inventory, _staticData);
+         placeToGrowGo.GetComponent<PlaceToGrow>().Construct(_inventory, _staticData, _world);
       }
    }
 }

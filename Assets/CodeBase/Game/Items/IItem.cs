@@ -1,5 +1,4 @@
-﻿using CodeBase.Game.InventoryDir;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CodeBase.Game.Items
 {
