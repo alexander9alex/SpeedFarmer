@@ -5,8 +5,10 @@ namespace CodeBase.Ecs.Components
 {
    public struct GrowingPlant
    {
-      public float GrowTime;
       public PlantState PlantState;
+      public float GrowTime;
       public Action OnGrow;
+      public float WiltTime;
+      public Action OnWilt;
    }
 }

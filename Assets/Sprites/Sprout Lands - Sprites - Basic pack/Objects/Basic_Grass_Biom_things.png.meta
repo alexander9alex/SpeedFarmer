@@ -275,7 +275,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic_Grass_Biom_things_6
+      name: 1234
       rect:
         serializedVersion: 2
         x: 96
@@ -821,11 +821,11 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic_Grass_Biom_things_32
+      name: Wilted_Plant
       rect:
         serializedVersion: 2
         x: 80
-        y: 16
+        y: 19
         width: 16
         height: 16
       alignment: 0
@@ -1104,6 +1104,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      1234: 406373098
       Basic_Grass_Biom_things_0: -1865175351
       Basic_Grass_Biom_things_1: 568923287
       Basic_Grass_Biom_things_10: -1261033142
@@ -1121,34 +1122,33 @@ TextureImporter:
       Basic_Grass_Biom_things_22: -1410955119
       Basic_Grass_Biom_things_23: -888711496
       Basic_Grass_Biom_things_24: -1015354769
-      Basic_Grass_Biom_things_25: 406373098
-      Basic_Grass_Biom_things_26: 1686377204
-      Basic_Grass_Biom_things_27: -876839595
-      Basic_Grass_Biom_things_28: -1599439429
-      Basic_Grass_Biom_things_29: 758715599
-      Basic_Grass_Biom_things_3: -685422033
-      Basic_Grass_Biom_things_30: -94526605
-      Basic_Grass_Biom_things_31: -849677907
-      Basic_Grass_Biom_things_32: -1908776359
-      Basic_Grass_Biom_things_33: -1817195045
-      Basic_Grass_Biom_things_34: -1370375143
-      Basic_Grass_Biom_things_35: -1166776579
-      Basic_Grass_Biom_things_36: -1177717597
-      Basic_Grass_Biom_things_37: 757940602
-      Basic_Grass_Biom_things_38: 882928890
-      Basic_Grass_Biom_things_39: 686062249
-      Basic_Grass_Biom_things_4: -567125075
-      Basic_Grass_Biom_things_40: 1867170097
-      Basic_Grass_Biom_things_41: 1501441731
-      Basic_Grass_Biom_things_42: 1648730381
-      Basic_Grass_Biom_things_43: -266685187
-      Basic_Grass_Biom_things_44: 449919939
-      Basic_Grass_Biom_things_5: 184672813
-      Basic_Grass_Biom_things_6: -2057232457
-      Basic_Grass_Biom_things_7: -753223819
-      Basic_Grass_Biom_things_8: -1126336566
-      Basic_Grass_Biom_things_9: -1829244884
-      Stone: -457644699
+      Basic_Grass_Biom_things_25: 1686377204
+      Basic_Grass_Biom_things_26: -876839595
+      Basic_Grass_Biom_things_27: -1599439429
+      Basic_Grass_Biom_things_28: 758715599
+      Basic_Grass_Biom_things_29: -685422033
+      Basic_Grass_Biom_things_3: -94526605
+      Basic_Grass_Biom_things_30: -849677907
+      Basic_Grass_Biom_things_31: -1908776359
+      Basic_Grass_Biom_things_33: -1370375143
+      Basic_Grass_Biom_things_34: -1166776579
+      Basic_Grass_Biom_things_35: -1177717597
+      Basic_Grass_Biom_things_36: 757940602
+      Basic_Grass_Biom_things_37: 882928890
+      Basic_Grass_Biom_things_38: 686062249
+      Basic_Grass_Biom_things_39: -567125075
+      Basic_Grass_Biom_things_4: 1867170097
+      Basic_Grass_Biom_things_40: 1501441731
+      Basic_Grass_Biom_things_41: 1648730381
+      Basic_Grass_Biom_things_42: -266685187
+      Basic_Grass_Biom_things_43: 449919939
+      Basic_Grass_Biom_things_44: 184672813
+      Basic_Grass_Biom_things_5: -753223819
+      Basic_Grass_Biom_things_7: -1126336566
+      Basic_Grass_Biom_things_8: -1829244884
+      Basic_Grass_Biom_things_9: -457644699
+      Stone: -2057232457
+      Wilted_Plant: -1908776359
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

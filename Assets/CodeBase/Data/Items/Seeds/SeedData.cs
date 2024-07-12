@@ -12,8 +12,10 @@ namespace CodeBase.Data.Items.Seeds
       public List<Sprite> GrowSprites;
       public List<int> GrowOrderInLayer;
       public Sprite GrownSprite;
+      public Sprite WiltedSprite;
 
       [Header("Balance data")]
-      public float GrowTime = 15;
+      public float GrowTime = 10;
+      public float WiltTime = 15;
    }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using CodeBase.Data;
 using CodeBase.Data.PlaceToGrowDir;
 using CodeBase.Ecs.Components;
@@ -25,7 +26,7 @@ namespace CodeBase.Game.PlaceToGrowDir
 
       private IInventory _inventory;
       private EcsWorld _world;
-      private EcsEntity _plantEntity;
+      private EcsEntity _growingPlantEntity;
 
       public void Construct(IInventory inventory, IStaticData staticData, EcsWorld world)
       {
@@ -40,18 +41,15 @@ namespace CodeBase.Game.PlaceToGrowDir
 
       public void Plant(ISeed seed)
       {
+         _inventory.RemoveItem();
+
          _currentSeed = seed;
          _currentPlantSpriteId = 0;
-         _currentPlantState = PlantState.Growing;
-
-         UpdatePlant();
-
-         _inventory.DropItem();
 
          UpdateDirt(PlaceToGrowDirt.Simple);
-         
-         _plantEntity = _world.NewEntity();
-         UpdateGrowPlant();
+         UpdatePlant(_currentSeed, PlantState.Growing);
+
+         CreateGrowingPlant();
 
          Debug.Log("Planted!");
       }
@@ -59,54 +57,92 @@ namespace CodeBase.Game.PlaceToGrowDir
       public void Chop()
       {
          ChopPlant(_currentSeed, _currentPlantState);
-         
-         _plantSr.sprite = null;
+         UpdatePlant(_currentSeed, PlantState.Empty);
          _currentSeed = null;
-         _currentPlantSpriteId = 0;
-         _currentPlantState = PlantState.Empty;
-         
+
          Debug.Log("Planted!");
+      }
+
+      private void CreateGrowingPlant()
+      {
+         _growingPlantEntity = _world.NewEntity();
+         ResetPlantGrow();
+         ResetPlantWilt();
       }
 
       private void ChopPlant(ISeed seed, PlantState plantState)
       {
-         ref ChopPlant growingPlant = ref _plantEntity.Get<ChopPlant>();
-         growingPlant.PlantState = plantState;
-         growingPlant.Position = transform.position;
-         growingPlant.SeedType = seed.SeedData.SeedType;
+         EcsEntity entity = _world.NewEntity();
+         ref ChopPlant chopPlant = ref entity.Get<ChopPlant>();
+         chopPlant.PlantState = plantState;
+         chopPlant.Position = transform.position;
+         chopPlant.SeedType = seed.SeedData.SeedType;
+      }
+
+      private void ResetPlantGrow()
+      {
+         ref GrowingPlant growingPlant = ref _growingPlantEntity.Get<GrowingPlant>();
+         growingPlant.PlantState = _currentPlantState;
+         growingPlant.GrowTime = _currentSeed.SeedData.GrowTime;
+         growingPlant.OnGrow = OnGrow;
+      }
+
+      private void ResetPlantWilt()
+      {
+         ref GrowingPlant growingPlant = ref _growingPlantEntity.Get<GrowingPlant>();
+         growingPlant.WiltTime = _currentSeed.SeedData.WiltTime;
+         growingPlant.OnWilt = OnWilt;
       }
 
       private void OnGrow()
       {
-         ref GrowingPlant growingPlant = ref _plantEntity.Get<GrowingPlant>();
-         growingPlant.GrowTime = _currentSeed.SeedData.GrowTime;
-         
          _currentPlantSpriteId++;
 
          if (IsGrown())
          {
-            _plantSr.sprite = _currentSeed.SeedData.GrownSprite;
-            _currentPlantState = PlantState.Grown;
+            UpdatePlant(_currentSeed, PlantState.Grown);
+            _growingPlantEntity.Destroy();
          }
          else
          {
-            UpdatePlant();
-            UpdateGrowPlant();
+            UpdatePlant(_currentSeed ,PlantState.Growing);
+            ResetPlantGrow();
          }
       }
 
-      private void UpdateGrowPlant()
+      private void OnWilt()
       {
-         ref GrowingPlant growingPlant = ref _plantEntity.Get<GrowingPlant>();
-         growingPlant.GrowTime = _currentSeed.SeedData.GrowTime;
-         growingPlant.PlantState = _currentPlantState;
-         growingPlant.OnGrow = OnGrow;
+         UpdatePlant(_currentSeed, PlantState.Wilted);
+         _growingPlantEntity.Destroy();
+
+         Debug.Log("Wilted!");
       }
 
-      private void UpdatePlant()
+      private void UpdatePlant(ISeed seed, PlantState plantState)
       {
-         _plantSr.sprite = _currentSeed.SeedData.GrowSprites[_currentPlantSpriteId];
-         _plantSr.sortingOrder = _currentSeed.SeedData.GrowOrderInLayer[_currentPlantSpriteId];
+         _currentPlantState = plantState;
+
+         switch (plantState)
+         {
+            case PlantState.Empty:
+               _plantSr.sprite = null;
+               _plantSr.sortingOrder = -10;
+               break;
+            case PlantState.Growing:
+               _plantSr.sprite = seed.SeedData.GrowSprites[_currentPlantSpriteId];
+               _plantSr.sortingOrder = seed.SeedData.GrowOrderInLayer[_currentPlantSpriteId];
+               break;
+            case PlantState.Grown:
+               _plantSr.sprite = seed.SeedData.GrownSprite;
+               _plantSr.sortingOrder = 0;
+               break;
+            case PlantState.Wilted:
+               _plantSr.sprite = seed.SeedData.WiltedSprite;
+               _plantSr.sortingOrder = 0;
+               break;
+            default:
+               throw new ArgumentOutOfRangeException(nameof(plantState), plantState, null);
+         }
       }
 
       private void UpdateDirt(PlaceToGrowDirt dirtState)
@@ -116,12 +152,10 @@ namespace CodeBase.Game.PlaceToGrowDir
       }
 
       public bool CanPlow() =>
-         _currentDirtState == PlaceToGrowDirt.Simple &&
-         _currentPlantState == PlantState.Empty;
+         _currentDirtState == PlaceToGrowDirt.Simple && _currentPlantState == PlantState.Empty;
 
       public bool CanPlant() =>
-         _currentPlantState == PlantState.Empty &&
-         _currentDirtState == PlaceToGrowDirt.Plowed;
+         _currentPlantState == PlantState.Empty && _currentDirtState == PlaceToGrowDirt.Plowed;
 
       public bool CanChop() =>
          _currentPlantState != PlantState.Empty;

@@ -10,7 +10,7 @@ namespace CodeBase.Game.InventoryDir
       public IItem GetItemData();
       public void SetItem(IItem item);
       public bool HasItem();
-      public IItem DropItem();
+      public IItem RemoveItem();
       public void UseItem();
    }
 }

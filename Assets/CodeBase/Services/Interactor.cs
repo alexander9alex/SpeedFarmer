@@ -40,7 +40,7 @@ namespace CodeBase.Services
 
       private void DropItem()
       {
-         IItem item = _inventory.DropItem();
+         IItem item = _inventory.RemoveItem();
          
          EcsEntity entity = _world.NewEntity();
          ref DropItemRequest dropItemRequest = ref entity.Get<DropItemRequest>();

@@ -69,6 +69,7 @@ namespace CodeBase.Infrastructure.Installers
          Container.BindInterfacesAndSelfTo<ChangeHeroAnimationSystem>().AsSingle();
          Container.BindInterfacesAndSelfTo<GrowPlantSystem>().AsSingle();
          Container.BindInterfacesAndSelfTo<ChopPlantSystem>().AsSingle();
+         Container.BindInterfacesAndSelfTo<WiltPlantSystem>().AsSingle();
       }
    }
 }

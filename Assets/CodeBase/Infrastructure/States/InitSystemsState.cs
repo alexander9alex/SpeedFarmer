@@ -44,6 +44,7 @@ namespace CodeBase.Infrastructure.States
          _systems.Add(_systemsFactory.CreateSystem<ChangeHeroAnimationSystem>());
          _systems.Add(_systemsFactory.CreateSystem<ChopPlantSystem>());
          _systems.Add(_systemsFactory.CreateSystem<GrowPlantSystem>());
+         _systems.Add(_systemsFactory.CreateSystem<WiltPlantSystem>());
       }
    }
 }

@@ -19,7 +19,7 @@ namespace CodeBase.Game.InventoryDir
          ItemChanged?.Invoke(_currentItem);
       }
 
-      public IItem DropItem()
+      public IItem RemoveItem()
       {
          IItem item = _currentItem;
          _currentItem = null;
