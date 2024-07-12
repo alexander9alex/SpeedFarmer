@@ -32,7 +32,7 @@ namespace CodeBase.Infrastructure.Factories
          _toolsFactory.SetParent(farm.transform);
          _placeToGrowFactory.SetParent(farm.transform);
          _seedsFactory.SetParent(farm.transform);
-         _fruitsFactory.SetParent(farm.transform);
+         _fruitsFactory.SetParent(farm.transform); 
 
          _toolsFactory.CreateTools(farmLocationData.ToolSpawnPointMarkers);
          _placeToGrowFactory.CreatePlacesToGrow(farmLocationData.PlaceToGrowSpawnPointMarkers);

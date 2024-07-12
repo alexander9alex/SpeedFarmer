@@ -4,5 +4,6 @@
    {
       Hoe,
       Axe,
+      WateringCan,
    }
 }

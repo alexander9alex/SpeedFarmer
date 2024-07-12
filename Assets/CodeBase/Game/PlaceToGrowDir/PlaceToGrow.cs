@@ -63,6 +63,9 @@ namespace CodeBase.Game.PlaceToGrowDir
          Debug.Log("Planted!");
       }
 
+      public void Pour() =>
+         ResetPlantWilt();
+
       private void CreateGrowingPlant()
       {
          _growingPlantEntity = _world.NewEntity();
@@ -125,26 +128,46 @@ namespace CodeBase.Game.PlaceToGrowDir
          switch (plantState)
          {
             case PlantState.Empty:
-               _plantSr.sprite = null;
-               _plantSr.sortingOrder = -10;
+               UpdateEmptyPlant();
                break;
             case PlantState.Growing:
-               _plantSr.sprite = seed.SeedData.GrowSprites[_currentPlantSpriteId];
-               _plantSr.sortingOrder = seed.SeedData.GrowOrderInLayer[_currentPlantSpriteId];
+               UpdateGrowingPlant(seed);
                break;
             case PlantState.Grown:
-               _plantSr.sprite = seed.SeedData.GrownSprite;
-               _plantSr.sortingOrder = 0;
+               UpdateGrownPlant(seed);
                break;
             case PlantState.Wilted:
-               _plantSr.sprite = seed.SeedData.WiltedSprite;
-               _plantSr.sortingOrder = 0;
+               UpdateWiltedPlant(seed);
                break;
             default:
                throw new ArgumentOutOfRangeException(nameof(plantState), plantState, null);
          }
       }
+      
+      private void UpdateEmptyPlant()
+      {
+         _plantSr.sprite = null;
+         _plantSr.sortingOrder = -10;
+      }
 
+      private void UpdateGrowingPlant(ISeed seed)
+      {
+         _plantSr.sprite = seed.SeedData.GrowSprites[_currentPlantSpriteId];
+         _plantSr.sortingOrder = seed.SeedData.GrowOrderInLayer[_currentPlantSpriteId];
+      }
+
+      private void UpdateGrownPlant(ISeed seed)
+      {
+         _plantSr.sprite = seed.SeedData.GrownSprite;
+         _plantSr.sortingOrder = 0;
+      }
+
+      private void UpdateWiltedPlant(ISeed seed)
+      {
+         _plantSr.sprite = seed.SeedData.WiltedSprite;
+         _plantSr.sortingOrder = 0;
+      }
+      
       private void UpdateDirt(PlaceToGrowDirt dirtState)
       {
          _currentDirtState = dirtState;
@@ -159,6 +182,9 @@ namespace CodeBase.Game.PlaceToGrowDir
 
       public bool CanChop() =>
          _currentPlantState != PlantState.Empty;
+
+      public bool CanPour() =>
+         _currentPlantState == PlantState.Growing;
 
       private bool IsGrown() =>
          _currentPlantSpriteId > _currentSeed.SeedData.GrowSprites.Count - 1;

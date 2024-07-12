@@ -6,6 +6,7 @@
       public const string Idle = "Idle";
       public const string Plowing = "Plowing";
       public const string Chop = "Chop";
+      public const string Pour = "Pour";
 
       public const string Up = "Up";
       public const string Down = "Down";

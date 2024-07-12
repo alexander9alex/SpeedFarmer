@@ -64,6 +64,8 @@ namespace CodeBase.Infrastructure.Factories
                return CreateHoe(toolData, toolGo);
             case ToolType.Axe:
                return CreateAxe(toolData, toolGo);
+            case ToolType.WateringCan:
+               return CreateWateringCan(toolData, toolGo);
             default:
                throw new ArgumentOutOfRangeException(nameof(toolType), toolType, null);
          }
@@ -78,6 +80,12 @@ namespace CodeBase.Infrastructure.Factories
       private GameObject CreateAxe(ToolData toolData, GameObject go)
       {
          new Axe(_world, _heroHitFinder, toolData, go.GetComponent<IItemView>());
+         return go;
+      }
+
+      private GameObject CreateWateringCan(ToolData toolData, GameObject go)
+      {
+         new WateringCan(_world, _heroHitFinder, toolData, go.GetComponent<IItemView>());
          return go;
       }
    }

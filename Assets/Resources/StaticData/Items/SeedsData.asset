@@ -22,5 +22,5 @@ MonoBehaviour:
     GrowOrderInLayer: f6ffffff0000000000000000
     GrownSprite: {fileID: -880826106, guid: 53ffb552a8db6424580df090d8d41687, type: 3}
     WiltedSprite: {fileID: -1908776359, guid: 909e79e0797dc25409fb0a8e171918e1, type: 3}
-    GrowTime: 5
-    WiltTime: 8
+    GrowTime: 10
+    WiltTime: 12

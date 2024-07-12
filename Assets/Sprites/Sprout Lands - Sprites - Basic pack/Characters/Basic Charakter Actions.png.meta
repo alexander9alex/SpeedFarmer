@@ -485,7 +485,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_16
+      name: Pour_Down_0
       rect:
         serializedVersion: 2
         x: 0
@@ -506,7 +506,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_17
+      name: Pour_Down_1
       rect:
         serializedVersion: 2
         x: 48
@@ -527,7 +527,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_18
+      name: Pour_Up_0
       rect:
         serializedVersion: 2
         x: 0
@@ -548,7 +548,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_19
+      name: Pour_Up_1
       rect:
         serializedVersion: 2
         x: 48
@@ -569,7 +569,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_20
+      name: Pour_Left_0
       rect:
         serializedVersion: 2
         x: 0
@@ -590,7 +590,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_21
+      name: Pour_Left_1
       rect:
         serializedVersion: 2
         x: 48
@@ -611,7 +611,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_22
+      name: Pour_Right_0
       rect:
         serializedVersion: 2
         x: 0
@@ -632,7 +632,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Basic Charakter Actions_23
+      name: Pour_Right_1
       rect:
         serializedVersion: 2
         x: 48
@@ -663,14 +663,6 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Basic Charakter Actions_16: -1618213077
-      Basic Charakter Actions_17: -324380369
-      Basic Charakter Actions_18: -1877169346
-      Basic Charakter Actions_19: 1717884267
-      Basic Charakter Actions_20: 63017011
-      Basic Charakter Actions_21: 108791772
-      Basic Charakter Actions_22: 590832079
-      Basic Charakter Actions_23: -2006424537
       Chop_Down_0: 2059792314
       Chop_Down_1: 364508258
       Chop_Left_0: 710308658
@@ -687,6 +679,14 @@ TextureImporter:
       Plowing_Right_1: 480072105
       Plowing_Up_0: -1159991806
       Plowing_Up_1: -1406383076
+      Pour_Down_0: -1618213077
+      Pour_Down_1: -324380369
+      Pour_Left_0: 63017011
+      Pour_Left_1: 108791772
+      Pour_Right_0: 590832079
+      Pour_Right_1: -2006424537
+      Pour_Up_0: -1877169346
+      Pour_Up_1: 1717884267
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

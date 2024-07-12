@@ -7,22 +7,24 @@ using UnityEngine;
 
 namespace CodeBase.Game.Items
 {
-   public class Hoe : Tool
+   public class WateringCan : Tool
    {
       private const string PlaceToGrowLayerName = "PlaceToGrow";
-      private readonly LayerMask _placeToGrowLayerMask;
+      private readonly int _placeToGrowLayerMask;
 
-      public Hoe(EcsWorld world, IHeroHitFinder heroHitFinder, ToolData toolData, IItemView itemView) : base(world, heroHitFinder, toolData,
-         itemView) =>
+      public WateringCan(EcsWorld world, IHeroHitFinder heroHitFinder, ToolData toolData, IItemView itemView) : base(world, heroHitFinder,
+         toolData, itemView) =>
          _placeToGrowLayerMask = 1 << LayerMask.NameToLayer(PlaceToGrowLayerName);
 
       protected override bool TryDoAction(RaycastHit2D hit)
       {
+         // in any case remove water count
+
          IPlaceToGrow placeToGrow = hit.collider.GetComponent<IPlaceToGrow>();
 
-         if (placeToGrow.CanPlow())
+         if (placeToGrow.CanPour())
          {
-            placeToGrow.Plow();
+            placeToGrow.Pour();
             return true;
          }
 
@@ -33,6 +35,6 @@ namespace CodeBase.Game.Items
          _placeToGrowLayerMask;
 
       protected override string GetAnimationActionName() =>
-         HeroAnimationData.Plowing;
+         HeroAnimationData.Pour;
    }
 }

@@ -10,5 +10,7 @@ namespace CodeBase.Game.PlaceToGrowDir
       public void Plant(ISeed seed);
       public bool CanChop();
       public void Chop();
+      bool CanPour();
+      void Pour();
    }
 }

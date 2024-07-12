@@ -27,19 +27,8 @@ namespace CodeBase.Services
 
          PhysicsDebug.DrawBox(boxCenter, boxSize / 2, ColliderVisibleTime);
          Physics2D.BoxCastNonAlloc(boxCenter, boxSize, 0, Vector2.zero, hits, BoxDistanceZ, layerMask);
-         return hits.ToList();
-      }
-
-      private Vector2 GetLookDir()
-      {
-         Vector2 lookDir = _hero.GetComponent<HeroMover>().GetLookDir();
-         if (lookDir.x == 0 || lookDir.y == 0)
-            return lookDir;
          
-         lookDir.x = 0;
-         lookDir.y = lookDir.y > 0 ? 1 : -1;
-
-         return lookDir;
+         return hits.Where(hit => hit.collider != null).OrderBy(hit => Vector3.Distance(_hero.transform.position, hit.transform.position)).ToList();
       }
    }
 }
