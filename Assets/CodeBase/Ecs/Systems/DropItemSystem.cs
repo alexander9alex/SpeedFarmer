@@ -10,8 +10,8 @@ namespace CodeBase.Ecs.Systems
 {
    public class DropItemSystem : IEcsRunSystem
    {
-      private const float Distance = .85f;
-      private const float Force = 4f;
+      private const float Distance = .5f;
+      private const float Force = 6f;
       private const float DropWithSpeedCoef = 2f;
 
       private EcsFilter<DropItemRequest> _requests;
@@ -37,20 +37,20 @@ namespace CodeBase.Ecs.Systems
                IItem item = _requests.Get1(i).ItemData;
                GameObject hero = _heroes.Get1(j).HeroGo;
 
-               DropItem(hero, item);
+               DropItem(item, hero);
             }
 
             _requests.GetEntity(i).Destroy();
          }
       }
 
-      private void DropItem(GameObject hero, IItem item)
+      private void DropItem(IItem item, GameObject hero)
       {
          Vector2 lookDir = hero.GetComponent<HeroMover>().GetLookDir();
          Vector3 pos = hero.transform.position + new Vector3(lookDir.x, lookDir.y) * Distance;
-
          GameObject itemGo = CreateItem(item, pos);
-         
+
+         itemGo.AddComponent<SmoothShowing>().StartShowing();
          itemGo.GetComponent<Rigidbody2D>()
             .AddForce(lookDir * Force + lookDir * hero.GetComponent<Rigidbody2D>().velocity.magnitude * DropWithSpeedCoef,
                ForceMode2D.Impulse);

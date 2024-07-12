@@ -18,7 +18,7 @@ namespace CodeBase.Game.Hero
       private Vector2 _lastLookDir = Vector2.down;
       private string _currentAnim;
       private AnimationWaitState _waitState;
-      private Action _onAnimationEnded;
+      private Action _onActionCompleted;
 
       public void Construct(IInputService inputService)
       {
@@ -30,15 +30,6 @@ namespace CodeBase.Game.Hero
       private void OnDestroy() =>
          _inputService.Move -= SetLookDir;
 
-      public void AnimationEnded()
-      {
-         _onAnimationEnded?.Invoke();
-         _onAnimationEnded = null;
-         
-         _waitState = AnimationWaitState.NoWaitEnd;
-         _inputService.ChangeActionMap(ActionMap.Hero);
-      }
-
       private void Update()
       {
          if (_rb.velocity.magnitude > MinSpeedToAnimateWalk)
@@ -47,8 +38,20 @@ namespace CodeBase.Game.Hero
             ChangeAnimation(HeroAnimationData.Idle);
       }
 
+      public void ActionCompleted()
+      {
+         _onActionCompleted?.Invoke();
+         _onActionCompleted = null;  
+      }
+
+      public void AnimationEnded()
+      {
+         _waitState = AnimationWaitState.NoWaitEnd;
+         _inputService.ChangeActionMap(ActionMap.Hero);
+      }
+
       public void ChangeAnimation(string anim, AnimationWaitState waitState = AnimationWaitState.NoWaitEnd,
-         Action onEnded = null)
+         Action onActionCompleted = null)
       {
          if (_waitState == AnimationWaitState.WaitEnd)
             return;
@@ -61,7 +64,7 @@ namespace CodeBase.Game.Hero
          _animator.Play(fullName);
 
          _currentAnim = fullName;
-         _onAnimationEnded = onEnded;
+         _onActionCompleted = onActionCompleted;
 
          _waitState = waitState;
          if (_waitState == AnimationWaitState.WaitEnd)

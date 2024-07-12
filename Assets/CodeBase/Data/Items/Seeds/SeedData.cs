@@ -10,6 +10,7 @@ namespace CodeBase.Data.Items.Seeds
       public SeedType SeedType;
       public Sprite Icon;
       public List<Sprite> GrowSprites;
+      public List<int> GrowOrderInLayer;
       public Sprite GrownSprite;
 
       [Header("Balance data")]

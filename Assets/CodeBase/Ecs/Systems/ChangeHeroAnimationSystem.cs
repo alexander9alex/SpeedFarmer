@@ -30,7 +30,7 @@ namespace CodeBase.Ecs.Systems
       private void ChangeAnimation(Hero hero, ChangeAnimationRequest animInfo)
       {
          HeroAnimator heroAnimator = hero.HeroGo.GetComponent<HeroAnimator>();
-         heroAnimator.ChangeAnimation(animInfo.AnimationName, animInfo.WaitState, animInfo.OnEnded);
+         heroAnimator.ChangeAnimation(animInfo.AnimationName, animInfo.WaitState, animInfo.OnActionCompleted);
       }
    }
 }

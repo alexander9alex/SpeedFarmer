@@ -37,13 +37,13 @@ namespace CodeBase.Game.Items
          ref ChangeAnimationRequest changeAnimation = ref entity.Get<ChangeAnimationRequest>();
          changeAnimation.AnimationName = GetAnimationActionName();
          changeAnimation.WaitState = AnimationWaitState.WaitEnd;
-         changeAnimation.OnEnded = OnAnimationEnded;
+         changeAnimation.OnActionCompleted = OnActionCompleted;
       }
 
       public void DestroyView() =>
          _itemView.Destroy();
 
-      private void OnAnimationEnded()
+      private void OnActionCompleted()
       {
          List<RaycastHit2D> hits = _heroHitFinder.GetHitWithMask(CollisionBoxSize, Distance, Offset, GetLayerMask());
          TryDoAction(hits);

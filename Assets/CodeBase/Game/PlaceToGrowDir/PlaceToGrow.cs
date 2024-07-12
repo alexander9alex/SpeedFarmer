@@ -44,7 +44,8 @@ namespace CodeBase.Game.PlaceToGrowDir
          _currentPlantSpriteId = 0;
          _currentPlantState = PlantState.Growing;
 
-         _plantSr.sprite = _currentSeed.SeedData.GrowSprites[0];
+         UpdatePlant();
+
          _inventory.DropItem();
 
          UpdateDirt(PlaceToGrowDirt.Simple);
@@ -89,7 +90,7 @@ namespace CodeBase.Game.PlaceToGrowDir
          }
          else
          {
-            _plantSr.sprite = _currentSeed.SeedData.GrowSprites[_currentPlantSpriteId];
+            UpdatePlant();
             UpdateGrowPlant();
          }
       }
@@ -100,6 +101,12 @@ namespace CodeBase.Game.PlaceToGrowDir
          growingPlant.GrowTime = _currentSeed.SeedData.GrowTime;
          growingPlant.PlantState = _currentPlantState;
          growingPlant.OnGrow = OnGrow;
+      }
+
+      private void UpdatePlant()
+      {
+         _plantSr.sprite = _currentSeed.SeedData.GrowSprites[_currentPlantSpriteId];
+         _plantSr.sortingOrder = _currentSeed.SeedData.GrowOrderInLayer[_currentPlantSpriteId];
       }
 
       private void UpdateDirt(PlaceToGrowDirt dirtState)
