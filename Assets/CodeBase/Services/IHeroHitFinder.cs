@@ -7,6 +7,7 @@ namespace CodeBase.Services
    public interface IHeroHitFinder
    {
       public void Construct(GameObject hero);
-      public List<RaycastHit2D> GetHitWithMask(Vector2 boxSize, float distance, Vector3 offset, LayerMask layerMask);
+      public Vector2 GetHeroLookDir();
+      public List<RaycastHit2D> GetHitWithMask(Vector2 boxSize, float distance, Vector2 offset, LayerMask layerMask);
    }
 }

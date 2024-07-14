@@ -18,3 +18,4 @@ MonoBehaviour:
     Sprite: {fileID: 683460476, guid: a64857c63f879d44880eb5bfce4339c5, type: 3}
   - SpriteType: 1
     Sprite: {fileID: -731076365, guid: a64857c63f879d44880eb5bfce4339c5, type: 3}
+  DropOfWater: {fileID: 383408313, guid: d206011bac319e640b8315c07d648a49, type: 3}

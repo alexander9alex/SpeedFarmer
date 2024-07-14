@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeBase.Data;
+using CodeBase.Data.PlaceToGrowDir;
 
 namespace CodeBase.Ecs.Components
 {
@@ -10,5 +11,8 @@ namespace CodeBase.Ecs.Components
       public Action OnGrow;
       public float WiltTime;
       public Action OnWilt;
+      public float DropOfWaterActivateTime;
+      public Action OnDropOfWaterActivate;
+      public bool IsDropOfWaterActivate;
    }
 }

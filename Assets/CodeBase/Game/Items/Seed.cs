@@ -37,7 +37,10 @@ namespace CodeBase.Game.Items
             {
                IPlaceToGrow placeToGrow = hit.collider.GetComponent<IPlaceToGrow>();
                if (placeToGrow.CanPlant())
+               {
                   placeToGrow.Plant(this);
+                  return;
+               }
             }
          }
       }

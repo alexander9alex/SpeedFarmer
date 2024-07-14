@@ -11,14 +11,14 @@ namespace CodeBase.Game.Items
    public abstract class Tool : ITool
    {
       private const float Distance = 0.4f;
-      private static readonly Vector3 Offset = new(0, -.25f, 0);
-      private static readonly Vector3 CollisionBoxSize = new(.4f, .4f, 1);
+      private readonly Vector3 _offset = new(0, -.25f, 0);
+      private readonly Vector3 _collisionBoxSize = new(.4f, .4f, 1);
 
       public ToolData ToolData { get; }
       public Sprite Icon => ToolData.Icon;
 
+      protected readonly IHeroHitFinder _heroHitFinder;
       private readonly EcsWorld _world;
-      private readonly IHeroHitFinder _heroHitFinder;
       private readonly IItemView _itemView;
 
       protected Tool(EcsWorld world, IHeroHitFinder heroHitFinder, ToolData toolData, IItemView itemView)
@@ -45,10 +45,13 @@ namespace CodeBase.Game.Items
 
       private void OnActionCompleted()
       {
-         List<RaycastHit2D> hits = _heroHitFinder.GetHitWithMask(CollisionBoxSize, Distance, Offset, GetLayerMask());
+         List<RaycastHit2D> hits = GetHitWithMask();
          TryDoAction(hits);
          Debug.Log("Tool used!");
       }
+
+      protected virtual List<RaycastHit2D> GetHitWithMask() =>
+         _heroHitFinder.GetHitWithMask(_collisionBoxSize, Distance, _offset, GetLayerMask());
 
       private void TryDoAction(List<RaycastHit2D> hits)
       {

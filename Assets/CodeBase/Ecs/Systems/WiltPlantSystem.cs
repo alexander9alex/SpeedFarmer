@@ -18,8 +18,14 @@ namespace CodeBase.Ecs.Systems
       private void Wilt(int entityId)
       {
          ref GrowingPlant growingPlant = ref _plants.Get1(entityId);
+         
          growingPlant.WiltTime -= Time.deltaTime;
-         if (growingPlant.PlantState == PlantState.Growing && growingPlant.WiltTime <= 0)
+         if (!growingPlant.IsDropOfWaterActivate && growingPlant.WiltTime <= growingPlant.DropOfWaterActivateTime)
+         {
+            growingPlant.IsDropOfWaterActivate = true;
+            growingPlant.OnDropOfWaterActivate?.Invoke();
+         }
+         else if (growingPlant.WiltTime <= 0)
             growingPlant.OnWilt?.Invoke();
       }
    }

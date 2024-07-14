@@ -2,6 +2,7 @@
 using CodeBase.Data;
 using CodeBase.Data.PlaceToGrowDir;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace CodeBase.StaticData
 {
@@ -10,5 +11,7 @@ namespace CodeBase.StaticData
    {
       public GameObject PlaceToGrowPrefab;
       public List<PlaceToGrowDirtSprite> DirtSprites;
+      [FormerlySerializedAs("_dropOfWater")]
+      public Sprite DropOfWater;
    }
 }

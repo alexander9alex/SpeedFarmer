@@ -9,6 +9,7 @@ using CodeBase.Services;
 using CodeBase.StaticData;
 using Leopotam.Ecs;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace CodeBase.Game.PlaceToGrowDir
 {
@@ -16,16 +17,18 @@ namespace CodeBase.Game.PlaceToGrowDir
    {
       [SerializeField] private SpriteRenderer _dirtSr;
       [SerializeField] private SpriteRenderer _plantSr;
+      [SerializeField] private SortingGroup _plantSortingGroup;
+      [SerializeField] private SpriteRenderer _dropOfWaterSr;
 
-      private PlaceToGrowData _placeToGrowData;
-      private PlaceToGrowDirt _currentDirtState = PlaceToGrowDirt.Simple;
-
-      private ISeed _currentSeed;
-      private int _currentPlantSpriteId;
-      private PlantState _currentPlantState = PlantState.Empty;
+      private ISeed _seed;
+      private int _plantSpriteId;
+      private PlantState _plantState = PlantState.Empty;
+      private PlaceToGrowDirt _dirtState = PlaceToGrowDirt.Simple;
+      private DropOfWaterState _dropOfWaterState = DropOfWaterState.Disable;
 
       private IInventory _inventory;
       private EcsWorld _world;
+      private PlaceToGrowData _placeToGrowData;
       private EcsEntity _growingPlantEntity;
 
       public void Construct(IInventory inventory, IStaticData staticData, EcsWorld world)
@@ -34,6 +37,8 @@ namespace CodeBase.Game.PlaceToGrowDir
          _world = world;
          _placeToGrowData = staticData.GetPlaceToGrowData();
          UpdateDirt(PlaceToGrowDirt.Simple);
+         UpdatePlant(null, PlantState.Empty);
+         UpdateDropOfWater(DropOfWaterState.Disable);
       }
 
       public void Plow() =>
@@ -43,11 +48,11 @@ namespace CodeBase.Game.PlaceToGrowDir
       {
          _inventory.RemoveItem();
 
-         _currentSeed = seed;
-         _currentPlantSpriteId = 0;
+         _seed = seed;
+         _plantSpriteId = 0;
 
          UpdateDirt(PlaceToGrowDirt.Simple);
-         UpdatePlant(_currentSeed, PlantState.Growing);
+         UpdatePlant(_seed, PlantState.Growing);
 
          CreateGrowingPlant();
 
@@ -56,9 +61,10 @@ namespace CodeBase.Game.PlaceToGrowDir
 
       public void Chop()
       {
-         ChopPlant(_currentSeed, _currentPlantState);
-         UpdatePlant(_currentSeed, PlantState.Empty);
-         _currentSeed = null;
+         ChopPlant(_seed, _plantState);
+         UpdatePlant(_seed, PlantState.Empty);
+         UpdateDropOfWater(DropOfWaterState.Disable);
+         _seed = null;
 
          Debug.Log("Planted!");
       }
@@ -85,37 +91,44 @@ namespace CodeBase.Game.PlaceToGrowDir
       private void ResetPlantGrow()
       {
          ref GrowingPlant growingPlant = ref _growingPlantEntity.Get<GrowingPlant>();
-         growingPlant.PlantState = _currentPlantState;
-         growingPlant.GrowTime = _currentSeed.SeedData.GrowTime;
+         growingPlant.PlantState = _plantState;
+         growingPlant.GrowTime = _seed.SeedData.GrowTime;
          growingPlant.OnGrow = OnGrow;
       }
 
       private void ResetPlantWilt()
       {
+         UpdateDropOfWater(DropOfWaterState.Disable);
+         
          ref GrowingPlant growingPlant = ref _growingPlantEntity.Get<GrowingPlant>();
-         growingPlant.WiltTime = _currentSeed.SeedData.WiltTime;
+         growingPlant.WiltTime = _seed.SeedData.WiltTime;
          growingPlant.OnWilt = OnWilt;
+         growingPlant.OnDropOfWaterActivate = () => UpdateDropOfWater(DropOfWaterState.Enable);
+         growingPlant.DropOfWaterActivateTime = _seed.SeedData.WiltTime / 2;
+         growingPlant.IsDropOfWaterActivate = false;
       }
 
       private void OnGrow()
       {
-         _currentPlantSpriteId++;
+         _plantSpriteId++;
 
          if (IsGrown())
          {
-            UpdatePlant(_currentSeed, PlantState.Grown);
+            UpdatePlant(_seed, PlantState.Grown);
+            UpdateDropOfWater(DropOfWaterState.Disable);
             _growingPlantEntity.Destroy();
          }
          else
          {
-            UpdatePlant(_currentSeed ,PlantState.Growing);
+            UpdatePlant(_seed ,PlantState.Growing);
             ResetPlantGrow();
          }
       }
 
       private void OnWilt()
       {
-         UpdatePlant(_currentSeed, PlantState.Wilted);
+         UpdatePlant(_seed, PlantState.Wilted);
+         UpdateDropOfWater(DropOfWaterState.Disable);
          _growingPlantEntity.Destroy();
 
          Debug.Log("Wilted!");
@@ -123,7 +136,7 @@ namespace CodeBase.Game.PlaceToGrowDir
 
       private void UpdatePlant(ISeed seed, PlantState plantState)
       {
-         _currentPlantState = plantState;
+         _plantState = plantState;
 
          switch (plantState)
          {
@@ -143,51 +156,75 @@ namespace CodeBase.Game.PlaceToGrowDir
                throw new ArgumentOutOfRangeException(nameof(plantState), plantState, null);
          }
       }
-      
+
+      private void UpdateDropOfWater(DropOfWaterState state)
+      {
+         _dropOfWaterState = state;
+         
+         switch (state)
+         {
+            case DropOfWaterState.Disable:
+               DisableDropOfWater();
+               break;
+            case DropOfWaterState.Enable:
+               EnableDropOfWater();
+               break;
+            default:
+               throw new ArgumentOutOfRangeException(nameof(state), state, null);
+         }
+      }
+
       private void UpdateEmptyPlant()
       {
          _plantSr.sprite = null;
-         _plantSr.sortingOrder = -10;
+         _plantSortingGroup.sortingOrder = -10;
       }
 
       private void UpdateGrowingPlant(ISeed seed)
       {
-         _plantSr.sprite = seed.SeedData.GrowSprites[_currentPlantSpriteId];
-         _plantSr.sortingOrder = seed.SeedData.GrowOrderInLayer[_currentPlantSpriteId];
+         _plantSr.sprite = seed.SeedData.GrowSprites[_plantSpriteId];
+         _plantSortingGroup.sortingOrder = seed.SeedData.GrowOrderInLayer[_plantSpriteId];
       }
 
       private void UpdateGrownPlant(ISeed seed)
       {
          _plantSr.sprite = seed.SeedData.GrownSprite;
-         _plantSr.sortingOrder = 0;
+         _plantSortingGroup.sortingOrder = 0;
       }
 
       private void UpdateWiltedPlant(ISeed seed)
       {
          _plantSr.sprite = seed.SeedData.WiltedSprite;
-         _plantSr.sortingOrder = 0;
+         _plantSortingGroup.sortingOrder = 0;
       }
-      
+
       private void UpdateDirt(PlaceToGrowDirt dirtState)
       {
-         _currentDirtState = dirtState;
-         _dirtSr.sprite = GetDirtSprite(_currentDirtState);
+         _dirtState = dirtState;
+         _dirtSr.sprite = GetDirtSprite(_dirtState);
       }
 
       public bool CanPlow() =>
-         _currentDirtState == PlaceToGrowDirt.Simple && _currentPlantState == PlantState.Empty;
+         _dirtState == PlaceToGrowDirt.Simple && _plantState == PlantState.Empty;
 
       public bool CanPlant() =>
-         _currentPlantState == PlantState.Empty && _currentDirtState == PlaceToGrowDirt.Plowed;
+         _plantState == PlantState.Empty && _dirtState == PlaceToGrowDirt.Plowed;
 
       public bool CanChop() =>
-         _currentPlantState != PlantState.Empty;
+         _plantState != PlantState.Empty;
 
       public bool CanPour() =>
-         _currentPlantState == PlantState.Growing;
+         _plantState == PlantState.Growing &&
+         _dropOfWaterState == DropOfWaterState.Enable;
+
+      private void DisableDropOfWater() =>
+         _dropOfWaterSr.sprite = null;
+
+      private void EnableDropOfWater() =>
+         _dropOfWaterSr.sprite = _placeToGrowData.DropOfWater;
 
       private bool IsGrown() =>
-         _currentPlantSpriteId > _currentSeed.SeedData.GrowSprites.Count - 1;
+         _plantSpriteId > _seed.SeedData.GrowSprites.Count - 1;
 
       private Sprite GetDirtSprite(PlaceToGrowDirt dirtState) =>
          _placeToGrowData.DirtSprites.First(state => state.SpriteType == dirtState).Sprite;

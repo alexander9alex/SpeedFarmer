@@ -15,7 +15,10 @@ namespace CodeBase.Services
       public void Construct(GameObject hero) =>
          _hero = hero;
 
-      public List<RaycastHit2D> GetHitWithMask(Vector2 boxSize, float distance, Vector3 offset, LayerMask layerMask)
+      public Vector2 GetHeroLookDir() =>
+         _hero.GetComponent<HeroMover>().GetLookDir();
+
+      public List<RaycastHit2D> GetHitWithMask(Vector2 boxSize, float distance, Vector2 offset, LayerMask layerMask)
       {
          if (_hero == null)
             return default;
@@ -23,12 +26,12 @@ namespace CodeBase.Services
          Vector2 lookDir = _hero.GetComponent<HeroMover>().GetLookDir();
 
          RaycastHit2D[] hits = new RaycastHit2D[10];
-         Vector3 boxCenter = _hero.transform.position + offset + new Vector3(lookDir.x, lookDir.y) * distance;
+         Vector3 boxCenter = _hero.transform.position + new Vector3(offset.x, offset.y) + new Vector3(lookDir.x, lookDir.y) * distance;
 
          PhysicsDebug.DrawBox(boxCenter, boxSize / 2, ColliderVisibleTime);
          Physics2D.BoxCastNonAlloc(boxCenter, boxSize, 0, Vector2.zero, hits, BoxDistanceZ, layerMask);
          
-         return hits.Where(hit => hit.collider != null).OrderBy(hit => Vector3.Distance(_hero.transform.position, hit.transform.position)).ToList();
+         return hits.Where(hit => hit.collider != null).OrderBy(hit => Vector3.Distance(boxCenter, hit.transform.position)).ToList();
       }
    }
 }
