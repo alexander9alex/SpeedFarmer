@@ -15,3 +15,5 @@ MonoBehaviour:
   Data:
   - SeedType: 0
     Icon: {fileID: -734534202, guid: 53ffb552a8db6424580df090d8d41687, type: 3}
+  - SeedType: 1
+    Icon: {fileID: 2099533430, guid: 53ffb552a8db6424580df090d8d41687, type: 3}

@@ -3,5 +3,6 @@
    public enum SeedType
    {
       Wheat,
+      Garnet,
    }
 }

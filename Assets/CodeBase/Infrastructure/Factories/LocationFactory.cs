@@ -39,7 +39,9 @@ namespace CodeBase.Infrastructure.Factories
 
          _seedsFactory.CreateSeed(SeedType.Wheat, new Vector3(1, 1));
          _seedsFactory.CreateSeed(SeedType.Wheat, new Vector3(-1, -1));
-         _seedsFactory.CreateSeed(SeedType.Wheat, new Vector3(4, -2));
+         _seedsFactory.CreateSeed(SeedType.Wheat, new Vector3(2, 1));
+         _seedsFactory.CreateSeed(SeedType.Garnet, new Vector3(3, 3));
+         _seedsFactory.CreateSeed(SeedType.Garnet, new Vector3(4, -1));
       }
    }
 }

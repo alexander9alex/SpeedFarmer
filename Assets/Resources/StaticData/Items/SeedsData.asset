@@ -23,4 +23,15 @@ MonoBehaviour:
     GrownSprite: {fileID: -880826106, guid: 53ffb552a8db6424580df090d8d41687, type: 3}
     WiltedSprite: {fileID: -1908776359, guid: 909e79e0797dc25409fb0a8e171918e1, type: 3}
     GrowTime: 10
-    WiltTime: 12
+    WiltTime: 15
+  - SeedType: 1
+    Icon: {fileID: 183699655, guid: 53ffb552a8db6424580df090d8d41687, type: 3}
+    GrowSprites:
+    - {fileID: -515949632, guid: 53ffb552a8db6424580df090d8d41687, type: 3}
+    - {fileID: -1020464911, guid: 53ffb552a8db6424580df090d8d41687, type: 3}
+    - {fileID: 429374802, guid: 53ffb552a8db6424580df090d8d41687, type: 3}
+    GrowOrderInLayer: f6ffffff0000000000000000
+    GrownSprite: {fileID: -293843954, guid: 53ffb552a8db6424580df090d8d41687, type: 3}
+    WiltedSprite: {fileID: -1908776359, guid: 909e79e0797dc25409fb0a8e171918e1, type: 3}
+    GrowTime: 15
+    WiltTime: 20

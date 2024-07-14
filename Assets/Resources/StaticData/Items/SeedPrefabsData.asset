@@ -15,3 +15,5 @@ MonoBehaviour:
   Prefabs:
   - SeedType: 0
     Prefab: {fileID: 7488049205266411658, guid: cefd8162c6e6dfb4989a99c1e961b992, type: 3}
+  - SeedType: 1
+    Prefab: {fileID: 7488049205266411658, guid: 28d12cb226ec77a478f57cfe5839c625, type: 3}
