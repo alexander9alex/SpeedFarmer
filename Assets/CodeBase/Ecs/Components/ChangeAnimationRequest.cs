@@ -8,5 +8,6 @@ namespace CodeBase.Ecs.Components
       public string AnimationName;
       public AnimationWaitState WaitState;
       public Action OnActionCompleted;
+      public Func<bool> CanUseItem;
    }
 }

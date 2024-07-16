@@ -1,7 +1,6 @@
 ﻿using CodeBase.Ecs.Components;
 using CodeBase.Game.Hero;
 using Leopotam.Ecs;
-using TMPro;
 
 namespace CodeBase.Ecs.Systems
 {
@@ -29,6 +28,9 @@ namespace CodeBase.Ecs.Systems
 
       private void ChangeAnimation(Hero hero, ChangeAnimationRequest animInfo)
       {
+         if (!animInfo.CanUseItem.Invoke())
+            return;
+         
          HeroAnimator heroAnimator = hero.HeroGo.GetComponent<HeroAnimator>();
          heroAnimator.ChangeAnimation(animInfo.AnimationName, animInfo.WaitState, animInfo.OnActionCompleted);
       }

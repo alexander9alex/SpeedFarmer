@@ -19,16 +19,13 @@ namespace CodeBase.Game.Items
 
       protected readonly IHeroHitFinder _heroHitFinder;
       private readonly EcsWorld _world;
-      private readonly IItemView _itemView;
+      private IItemView _itemView;
 
-      protected Tool(EcsWorld world, IHeroHitFinder heroHitFinder, ToolData toolData, IItemView itemView)
+      protected Tool(EcsWorld world, IHeroHitFinder heroHitFinder, ToolData toolData)
       {
          _heroHitFinder = heroHitFinder;
          _world = world;
          ToolData = toolData;
-
-         _itemView = itemView;
-         _itemView.Construct(this);
       }
 
       public void Use()
@@ -37,7 +34,14 @@ namespace CodeBase.Game.Items
          ref ChangeAnimationRequest changeAnimation = ref entity.Get<ChangeAnimationRequest>();
          changeAnimation.AnimationName = GetAnimationActionName();
          changeAnimation.WaitState = AnimationWaitState.WaitEnd;
+         changeAnimation.CanUseItem = CanUseItem;
          changeAnimation.OnActionCompleted = OnActionCompleted;
+      }
+
+      public void SetView(IItemView itemView)
+      {
+         itemView.Construct(this);
+         _itemView = itemView;
       }
 
       public void DestroyView() =>
@@ -53,7 +57,7 @@ namespace CodeBase.Game.Items
       protected virtual List<RaycastHit2D> GetHitWithMask() =>
          _heroHitFinder.GetHitWithMask(_collisionBoxSize, Distance, _offset, GetLayerMask());
 
-      private void TryDoAction(List<RaycastHit2D> hits)
+      protected virtual void TryDoAction(List<RaycastHit2D> hits)
       {
          foreach (RaycastHit2D hit in hits)
          {
@@ -62,6 +66,7 @@ namespace CodeBase.Game.Items
          }
       }
 
+      protected abstract bool CanUseItem();
       protected abstract bool TryDoAction(RaycastHit2D hit);
       protected abstract LayerMask GetLayerMask();
       protected abstract string GetAnimationActionName();

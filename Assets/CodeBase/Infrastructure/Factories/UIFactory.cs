@@ -45,7 +45,7 @@ namespace CodeBase.Infrastructure.Factories
       private void CreateInventory(Transform parent, GameObject inventoryPrefab)
       {
          GameObject inventory = Object.Instantiate(inventoryPrefab, parent);
-         inventory.GetComponent<InventoryView>().Construct(_inventory);
+         inventory.GetComponent<InventoryView>().Construct(_staticData.GetInventoryData(), _inventory);
       }
 
       private void CreateMainMenu()

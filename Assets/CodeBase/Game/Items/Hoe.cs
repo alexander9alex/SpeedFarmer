@@ -12,8 +12,7 @@ namespace CodeBase.Game.Items
       private const string PlaceToGrowLayerName = "PlaceToGrow";
       private readonly LayerMask _placeToGrowLayerMask;
 
-      public Hoe(EcsWorld world, IHeroHitFinder heroHitFinder, ToolData toolData, IItemView itemView) : base(world, heroHitFinder, toolData,
-         itemView) =>
+      public Hoe(EcsWorld world, IHeroHitFinder heroHitFinder, ToolData toolData) : base(world, heroHitFinder, toolData) =>
          _placeToGrowLayerMask = 1 << LayerMask.NameToLayer(PlaceToGrowLayerName);
 
       protected override bool TryDoAction(RaycastHit2D hit)
@@ -34,5 +33,8 @@ namespace CodeBase.Game.Items
 
       protected override string GetAnimationActionName() =>
          HeroAnimationData.Plowing;
+
+      protected override bool CanUseItem() =>
+         true;
    }
 }

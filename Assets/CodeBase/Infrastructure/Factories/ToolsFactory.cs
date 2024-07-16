@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CodeBase.Data.Items.Tools;
+using CodeBase.Game.InventoryDir;
 using CodeBase.Game.Items;
 using CodeBase.Services;
 using CodeBase.StaticData.Items;
@@ -18,6 +19,8 @@ namespace CodeBase.Infrastructure.Factories
       private readonly ToolsData _toolsData;
       private readonly ToolPrefabsData _toolPrefabsData;
 
+      private Dictionary<Type, Tool> _createdTools = new Dictionary<Type, Tool>();
+      
       private Transform _parent;
 
       public ToolsFactory(IStaticData staticData, IHeroHitFinder heroHitFinder, EcsWorld world)
@@ -73,19 +76,49 @@ namespace CodeBase.Infrastructure.Factories
 
       private GameObject CreateHoe(ToolData toolData, GameObject go)
       {
-         new Hoe(_world, _heroHitFinder, toolData, go.GetComponent<IItemView>());
+         Tool tool;
+         
+         if (_createdTools.ContainsKey(typeof(Hoe)))
+            tool = _createdTools[typeof(Hoe)];
+         else
+         {
+            tool = new Hoe(_world, _heroHitFinder, toolData);
+            _createdTools.Add(typeof(Hoe), tool);
+         }
+
+         tool.SetView(go.GetComponent<IItemView>());
          return go;
       }
 
       private GameObject CreateAxe(ToolData toolData, GameObject go)
       {
-         new Axe(_world, _heroHitFinder, toolData, go.GetComponent<IItemView>());
+         Tool tool;
+         
+         if (_createdTools.ContainsKey(typeof(Axe)))
+            tool = _createdTools[typeof(Axe)];
+         else
+         {
+            tool = new Axe(_world, _heroHitFinder, toolData);
+            _createdTools.Add(typeof(Axe), tool);
+         }
+
+         tool.SetView(go.GetComponent<IItemView>());
          return go;
       }
 
       private GameObject CreateWateringCan(ToolData toolData, GameObject go)
       {
-         new WateringCan(_world, _heroHitFinder, toolData, go.GetComponent<IItemView>());
+         Tool tool;
+         
+         if (_createdTools.ContainsKey(typeof(WateringCan)))
+            tool = _createdTools[typeof(WateringCan)];
+         else
+         {
+            tool = new WateringCan(_world, _heroHitFinder, toolData, new DropsOfWater(3));
+            _createdTools.Add(typeof(WateringCan), tool);
+         }
+
+         tool.SetView(go.GetComponent<IItemView>());
          return go;
       }
    }

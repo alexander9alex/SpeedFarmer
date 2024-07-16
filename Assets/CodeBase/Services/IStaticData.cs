@@ -17,5 +17,6 @@ namespace CodeBase.Services
       SeedsData GetSeedsData();
       FruitPrefabsData GetFruitPrefabsData();
       FruitsData GetFruitsData();
+      InventoryData GetInventoryData();
    }
 }

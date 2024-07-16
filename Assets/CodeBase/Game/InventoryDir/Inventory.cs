@@ -1,5 +1,4 @@
 ﻿using System;
-using CodeBase.Data;
 using CodeBase.Game.Items;
 
 namespace CodeBase.Game.InventoryDir
@@ -7,6 +6,7 @@ namespace CodeBase.Game.InventoryDir
    public class Inventory : IInventory
    {
       public event Action<IItem> ItemChanged;
+      public event Action<DropsOfWater> DropsOfWaterChanged;
 
       private IItem _currentItem;
 
@@ -17,13 +17,20 @@ namespace CodeBase.Game.InventoryDir
       {
          _currentItem = item;
          ItemChanged?.Invoke(_currentItem);
+
+         if (item is WateringCan wateringCan)
+            wateringCan.DropsOfWaterChanged += DropsOfWaterChanged;
       }
 
       public IItem RemoveItem()
       {
          IItem item = _currentItem;
          _currentItem = null;
-         ItemChanged?.Invoke(_currentItem);
+         ItemChanged?.Invoke(null);
+         
+         if (item is WateringCan wateringCan)
+            wateringCan.DropsOfWaterChanged -= DropsOfWaterChanged;
+         
          return item;
       }
 

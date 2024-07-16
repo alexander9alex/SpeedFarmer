@@ -99,7 +99,7 @@ namespace CodeBase.Game.PlaceToGrowDir
       private void ResetPlantWilt()
       {
          UpdateDropOfWater(DropOfWaterState.Disable);
-         
+
          ref GrowingPlant growingPlant = ref _growingPlantEntity.Get<GrowingPlant>();
          growingPlant.WiltTime = _seed.SeedData.WiltTime;
          growingPlant.OnWilt = OnWilt;
@@ -120,7 +120,7 @@ namespace CodeBase.Game.PlaceToGrowDir
          }
          else
          {
-            UpdatePlant(_seed ,PlantState.Growing);
+            UpdatePlant(_seed, PlantState.Growing);
             ResetPlantGrow();
          }
       }
@@ -160,7 +160,7 @@ namespace CodeBase.Game.PlaceToGrowDir
       private void UpdateDropOfWater(DropOfWaterState state)
       {
          _dropOfWaterState = state;
-         
+
          switch (state)
          {
             case DropOfWaterState.Disable:
@@ -214,8 +214,7 @@ namespace CodeBase.Game.PlaceToGrowDir
          _plantState != PlantState.Empty;
 
       public bool CanPour() =>
-         _plantState == PlantState.Growing &&
-         _dropOfWaterState == DropOfWaterState.Enable;
+         _plantState == PlantState.Growing && _dropOfWaterState == DropOfWaterState.Enable;
 
       private void DisableDropOfWater() =>
          _dropOfWaterSr.sprite = null;

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb5071f33431488a9a228e114d98c3a2, type: 3}
+  m_Name: InventoryData
+  m_EditorClassIdentifier: 
+  NullItemSprite: {fileID: -1160925332, guid: fd43130692d90ae4cb4cedb129eee4a1, type: 3}
+  FullDropOfWaterPrefab: {fileID: 1419521507094693652, guid: dfc2f90d9d962904ba8c882fdc20fd43, type: 3}
+  EmptyDropOfWaterPrefab: {fileID: 1419521507094693652, guid: c33fe3e663c42e94e882f38e9670a5ec, type: 3}
