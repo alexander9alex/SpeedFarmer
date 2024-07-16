@@ -70,6 +70,7 @@ namespace CodeBase.Infrastructure.Installers
          Container.BindInterfacesAndSelfTo<GrowPlantSystem>().AsSingle();
          Container.BindInterfacesAndSelfTo<ChopPlantSystem>().AsSingle();
          Container.BindInterfacesAndSelfTo<WiltPlantSystem>().AsSingle();
+         Container.BindInterfacesAndSelfTo<TryInteractWithItemSystem>().AsSingle();
       }
    }
 }

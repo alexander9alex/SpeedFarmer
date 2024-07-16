@@ -30,11 +30,20 @@ namespace CodeBase.Game.Items
 
       public void Use()
       {
+         EcsEntity tryInteractWithItemEntity = _world.NewEntity();
+         ref TryInteractWithItemRequest tryInteractWithItemRequest = ref tryInteractWithItemEntity.Get<TryInteractWithItemRequest>();
+         tryInteractWithItemRequest.UseItem = UseItem;
+      }
+
+      private void UseItem()
+      {
+         if (!CanUseItem())
+            return;
+
          EcsEntity entity = _world.NewEntity();
          ref ChangeAnimationRequest changeAnimation = ref entity.Get<ChangeAnimationRequest>();
          changeAnimation.AnimationName = GetAnimationActionName();
          changeAnimation.WaitState = AnimationWaitState.WaitEnd;
-         changeAnimation.CanUseItem = CanUseItem;
          changeAnimation.OnActionCompleted = OnActionCompleted;
       }
 

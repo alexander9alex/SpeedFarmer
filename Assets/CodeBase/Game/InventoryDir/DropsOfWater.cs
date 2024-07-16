@@ -14,13 +14,19 @@ namespace CodeBase.Game.InventoryDir
          CurrentDropsCount = allDropsCount;
       }
 
-      public bool HasDropsOfWater() =>
-         CurrentDropsCount > 0;
+      public void Fill()
+      {
+         CurrentDropsCount = AllDropsCount;
+         DropsOfWaterChanged?.Invoke(this);
+      }
 
       public void DecreaseDropsOfWater()
       {
          CurrentDropsCount--;
          DropsOfWaterChanged?.Invoke(this);
       }
+
+      public bool HasDropsOfWater() =>
+         CurrentDropsCount > 0;
    }
 }

@@ -1,4 +1,7 @@
 ﻿namespace CodeBase.Services
 {
-   public interface IInteractor { }
+   public interface IInteractor
+   {
+      
+   }
 }

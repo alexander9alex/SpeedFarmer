@@ -77,5 +77,8 @@ namespace CodeBase.Game.Items
 
       protected override bool CanUseItem() =>
          _dropsOfWater.HasDropsOfWater();
+
+      public void FillWithWater() =>
+         _dropsOfWater.Fill();
    }
 }

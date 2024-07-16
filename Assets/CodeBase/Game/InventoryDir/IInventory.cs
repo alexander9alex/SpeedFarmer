@@ -1,5 +1,4 @@
 ﻿using System;
-using CodeBase.Data;
 using CodeBase.Game.Items;
 
 namespace CodeBase.Game.InventoryDir
@@ -8,7 +7,7 @@ namespace CodeBase.Game.InventoryDir
    {
       public event Action<IItem> ItemChanged;
       public event Action<DropsOfWater> DropsOfWaterChanged;
-      public IItem GetItemData();
+      public IItem GetItem();
       public void SetItem(IItem item);
       public bool HasItem();
       public IItem RemoveItem();

@@ -39,6 +39,7 @@ namespace CodeBase.Infrastructure.States
 
       private void InitSystems()
       {
+         _systems.Add(_systemsFactory.CreateSystem<TryInteractWithItemSystem>());
          _systems.Add(_systemsFactory.CreateSystem<TryInteractSystem>());
          _systems.Add(_systemsFactory.CreateSystem<DropItemSystem>());
          _systems.Add(_systemsFactory.CreateSystem<ChangeHeroAnimationSystem>());

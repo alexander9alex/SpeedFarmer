@@ -1,5 +1,6 @@
 ﻿using CodeBase.Ecs.Components;
 using CodeBase.Game.Hero;
+using CodeBase.Services;
 using Leopotam.Ecs;
 
 namespace CodeBase.Ecs.Systems
@@ -8,6 +9,13 @@ namespace CodeBase.Ecs.Systems
    {
       private EcsFilter<ChangeAnimationRequest> _requests;
       private EcsFilter<Hero> _heroes;
+
+      private readonly IInteractor _interactor;
+
+      public ChangeHeroAnimationSystem(IInteractor interactor)
+      {
+         _interactor = interactor;
+      }
 
       public void Run()
       {
@@ -28,9 +36,6 @@ namespace CodeBase.Ecs.Systems
 
       private void ChangeAnimation(Hero hero, ChangeAnimationRequest animInfo)
       {
-         if (!animInfo.CanUseItem.Invoke())
-            return;
-         
          HeroAnimator heroAnimator = hero.HeroGo.GetComponent<HeroAnimator>();
          heroAnimator.ChangeAnimation(animInfo.AnimationName, animInfo.WaitState, animInfo.OnActionCompleted);
       }

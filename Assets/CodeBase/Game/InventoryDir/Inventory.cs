@@ -10,7 +10,7 @@ namespace CodeBase.Game.InventoryDir
 
       private IItem _currentItem;
 
-      public IItem GetItemData() => 
+      public IItem GetItem() => 
          _currentItem;
 
       public void SetItem(IItem item)

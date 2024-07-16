@@ -3,21 +3,22 @@ using CodeBase.Data.FinderData;
 using CodeBase.Ecs.Components;
 using CodeBase.Game.InventoryDir;
 using CodeBase.Game.Items;
+using CodeBase.Game.WashtubDir;
 using CodeBase.Services;
 using Leopotam.Ecs;
 using UnityEngine;
 
 namespace CodeBase.Ecs.Systems
 {
-   public class TryInteractSystem : IEcsRunSystem
+   public class TryInteractWithItemSystem : IEcsRunSystem
    {
-      private EcsFilter<TryInteractRequest> _requests;
+      private EcsFilter<TryInteractWithItemRequest> _requests;
 
       private readonly IInventory _inventory;
       private readonly IHeroHitFinder _heroHitFinder;
       private readonly int _interactableLayerMask;
 
-      public TryInteractSystem(IInventory inventory, IHeroHitFinder heroHitFinder)
+      public TryInteractWithItemSystem(IInventory inventory, IHeroHitFinder heroHitFinder)
       {
          _inventory = inventory;
          _heroHitFinder = heroHitFinder;
@@ -28,26 +29,28 @@ namespace CodeBase.Ecs.Systems
       {
          foreach (int i in _requests)
          {
-            if (TryFindInteractable(out IInteractable interactable))
-               TryInteract(interactable);
+            TryInteractWithItemRequest tryInteractWithItemRequest = _requests.Get1(i);
 
+            if (TryFindInteractWithMe(out IInteractWithMe interactWithMe))
+               TryInteractWithItem(interactWithMe);
+            else
+               tryInteractWithItemRequest.UseItem?.Invoke();
+            
             _requests.GetEntity(i).Destroy();
          }
       }
 
-      private void TryInteract(IInteractable interactable)
+      private void TryInteractWithItem(IInteractWithMe interactWithMe)
       {
-         if (interactable is IItemView itemView && !_inventory.HasItem())
-            TakeItem(itemView.Item);
+         if (!_inventory.HasItem())
+            return;
+         
+         
+         if (interactWithMe is Washtub && _inventory.GetItem() is WateringCan wateringCan)
+            wateringCan.FillWithWater();
       }
 
-      private void TakeItem(IItem item)
-      {
-         item.DestroyView();
-         _inventory.SetItem(item);
-      }
-
-      private bool TryFindInteractable(out IInteractable interactable)
+      private bool TryFindInteractWithMe(out IInteractWithMe interactWithMe)
       {
          List<RaycastHit2D> hits = _heroHitFinder.GetHitWithMask(InteractableHitFinderData.CollisionBoxSize,
             InteractableHitFinderData.Distance, InteractableHitFinderData.Offset, _interactableLayerMask);
@@ -57,11 +60,15 @@ namespace CodeBase.Ecs.Systems
             if (hit.collider == null)
                continue;
             
-            interactable = hit.collider.GetComponent<IInteractable>();
+            interactWithMe = hit.collider.GetComponent<IInteractWithMe>();
+
+            if (interactWithMe == null)
+               continue;
+            
             return true;
          }
 
-         interactable = null;
+         interactWithMe = null;
          return false;
       }
    }

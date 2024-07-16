@@ -1,5 +1,4 @@
 ﻿using CodeBase.Data.Items;
-using CodeBase.Ecs.Systems;
 using UnityEngine;
 
 namespace CodeBase.Game.Items

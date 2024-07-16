@@ -20,7 +20,7 @@ namespace CodeBase.Game.InventoryDir
          _inventory.ItemChanged += OnItemChanged;
          _inventory.DropsOfWaterChanged += DropsOfWaterChanged;
 
-         OnItemChanged(_inventory.GetItemData());
+         OnItemChanged(_inventory.GetItem());
       }
 
       private void OnDestroy()

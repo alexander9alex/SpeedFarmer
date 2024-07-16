@@ -17,7 +17,7 @@ namespace CodeBase.Services
          inputService.Interact += OnInteract;
          inputService.Drop += OnDrop;
       }
-      
+
       private void OnInteract()
       {
          if (_inventory.HasItem())
@@ -41,7 +41,7 @@ namespace CodeBase.Services
       private void DropItem()
       {
          IItem item = _inventory.RemoveItem();
-         
+
          EcsEntity entity = _world.NewEntity();
          ref DropItemRequest dropItemRequest = ref entity.Get<DropItemRequest>();
          dropItemRequest.ItemData = item;
